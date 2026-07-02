@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iQurious — Where Curiosity Meets Clarity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBFCF7;
+    --bg-soft:#F3F8F3;
+    --ink:#22314A;
+    --ink-soft:#5B6B85;
+    --teal:#3EC6C0;
+    --teal-dark:#2AA6A1;
+    --yellow:#FFCB4C;
+    --coral:#FF7A5C;
+    --purple:#8B7FE8;
+    --card:#FFFFFF;
+    --line:#E7EEE6;
+    --shadow: 0 10px 30px rgba(34,49,74,0.08);
+    --shadow-lg: 0 24px 60px rgba(34,49,74,0.14);
+    --radius: 22px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Nunito',sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4,.display{
+    font-family:'Baloo 2',cursive;
+    font-weight:700;
+    letter-spacing:0.2px;
+    margin:0;
+  }
+  p{margin:0;color:var(--ink-soft);line-height:1.6;}
+  a{text-decoration:none;color:inherit;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  section{position:relative;}
+  img,svg{display:block;}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(251,252,247,0.82);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1180px;margin:0 auto;padding:14px 28px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Baloo 2';font-weight:800;font-size:1.35rem;color:var(--ink);}
+  .logo-dot{
+    width:34px;height:34px;border-radius:9px;
+    display:block;object-fit:cover;
+    box-shadow: 0 4px 10px rgba(13,20,90,0.35);
+    transition: transform .3s ease;
+  }
+  .logo:hover .logo-dot{ transform: rotate(-8deg) scale(1.06); }
+  .nav-links{display:flex;gap:30px;align-items:center;}
+  .nav-links a{font-weight:700;font-size:0.96rem;color:var(--ink-soft);transition:color .2s;}
+  .nav-links a:hover{color:var(--teal-dark);}
+  .nav-cta{
+    background:var(--coral);color:#fff;padding:11px 22px;border-radius:100px;
+    font-weight:800;font-size:0.95rem;box-shadow:0 8px 18px rgba(255,122,92,0.35);
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 12px 22px rgba(255,122,92,0.45);}
+  .burger{display:none;flex-direction:column;gap:5px;background:none;padding:6px;}
+  .burger span{width:24px;height:3px;border-radius:3px;background:var(--ink);}
+  .mobile-menu{display:none;flex-direction:column;gap:16px;padding:18px 28px 22px;background:var(--bg);border-bottom:1px solid var(--line);}
+  .mobile-menu a{font-weight:700;color:var(--ink);}
+  .mobile-menu.open{display:flex;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:150px 0 90px;
+    background:radial-gradient(ellipse 900px 500px at 80% 10%, rgba(255,203,76,0.18), transparent 60%),
+               radial-gradient(ellipse 700px 500px at 10% 30%, rgba(139,127,232,0.14), transparent 60%);
+  }
+  .hero-inner{display:grid;grid-template-columns:1.05fr 0.95fr;gap:50px;align-items:center;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--bg-soft);border:1px solid var(--line);
+    padding:7px 16px;border-radius:100px;font-weight:800;font-size:0.8rem;
+    color:var(--teal-dark);margin-bottom:20px;letter-spacing:0.3px;
+  }
+  .hero h1{font-size:3.15rem;line-height:1.08;color:var(--ink);}
+  .hero h1 .hl{color:var(--teal-dark);}
+  .hero h1 .hl2{color:var(--coral);}
+  .hero p.lead{margin-top:20px;font-size:1.15rem;max-width:480px;}
+  .role-toggle{
+    display:inline-flex;background:var(--bg-soft);border:1px solid var(--line);
+    border-radius:100px;padding:5px;margin-top:28px;gap:4px;
+  }
+  .role-toggle button{
+    padding:10px 20px;border-radius:100px;font-weight:800;font-size:0.92rem;color:var(--ink-soft);
+    transition:all .25s ease;
+  }
+  .role-toggle button.active{background:var(--ink);color:#fff;box-shadow:0 6px 14px rgba(34,49,74,0.25);}
+  .hero-actions{display:flex;gap:14px;margin-top:26px;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--teal);color:#fff;padding:15px 28px;border-radius:100px;font-weight:800;font-size:1rem;
+    box-shadow:0 10px 22px rgba(62,198,192,0.35);transition:transform .18s, box-shadow .18s;
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 26px rgba(62,198,192,0.45);}
+  .btn-ghost{
+    background:transparent;color:var(--ink);padding:15px 24px;border-radius:100px;font-weight:800;font-size:1rem;
+    border:2px solid var(--line);transition:border-color .18s, background .18s;
+  }
+  .btn-ghost:hover{border-color:var(--ink);background:var(--bg-soft);}
+  .hero-note{margin-top:18px;font-size:0.85rem;color:var(--ink-soft);display:flex;align-items:center;gap:8px;}
+
+  /* ---------- 3D ORBIT ---------- */
+  .orbit-stage{
+    position:relative;height:420px;perspective:1200px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .orbit-core{
+    width:130px;height:130px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #fff, var(--teal) 45%, var(--teal-dark) 100%);
+    box-shadow:0 0 0 10px rgba(62,198,192,0.12), 0 0 60px rgba(62,198,192,0.5), inset -8px -8px 20px rgba(0,0,0,0.15);
+    position:relative;z-index:2;
+    display:flex;align-items:center;justify-content:center;
+    animation:pulseCore 3.4s ease-in-out infinite;
+  }
+  @keyframes pulseCore{0%,100%{transform:scale(1);}50%{transform:scale(1.045);}}
+  .orbit-core span{font-family:'Baloo 2';font-weight:800;color:#fff;font-size:1rem;text-shadow:0 2px 6px rgba(0,0,0,0.25);}
+  .ring{
+    position:absolute;top:50%;left:50%;
+    border:2px dashed rgba(34,49,74,0.15);
+    border-radius:50%;
+    transform-style:preserve-3d;
+  }
+  .ring1{width:320px;height:320px;margin:-160px 0 0 -160px;transform:rotateX(72deg) rotateZ(0deg);animation:spin1 18s linear infinite;}
+  .ring2{width:420px;height:420px;margin:-210px 0 0 -210px;transform:rotateX(68deg) rotateZ(30deg);animation:spin2 26s linear infinite reverse;}
+  @keyframes spin1{ to{ transform:rotateX(72deg) rotateZ(360deg); } }
+  @keyframes spin2{ to{ transform:rotateX(68deg) rotateZ(390deg); } }
+  .moon{
+    position:absolute;width:54px;height:54px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+    box-shadow:var(--shadow);transform-style:preserve-3d;
+  }
+  .moon.m1{background:var(--yellow);top:-27px;left:50%;margin-left:-27px;}
+  .moon.m2{background:var(--coral);top:50%;right:-27px;margin-top:-27px;}
+  .moon.m3{background:var(--purple);bottom:-27px;left:50%;margin-left:-27px;}
+  .moon.m4{background:#fff;border:2px solid var(--line);top:50%;left:-27px;margin-top:-27px;}
+  .ring1 .moon{animation:counter1 18s linear infinite;}
+  .ring2 .moon{animation:counter2 26s linear infinite reverse;}
+  @keyframes counter1{ to{ transform:rotateZ(-360deg) rotateX(-72deg); } }
+  @keyframes counter2{ to{ transform:rotateZ(-390deg) rotateX(-68deg); } }
+  .float-chip{
+    position:absolute;background:var(--card);border:1px solid var(--line);
+    border-radius:16px;padding:10px 14px;box-shadow:var(--shadow);
+    font-weight:800;font-size:0.82rem;display:flex;align-items:center;gap:8px;
+    animation:floaty 5s ease-in-out infinite;
+  }
+  .float-chip.c1{top:6%;left:0%;animation-delay:0s;}
+  .float-chip.c2{bottom:8%;right:2%;animation-delay:1.2s;}
+  @keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+
+  /* ---------- SECTION HEADS ---------- */
+  .section-pad{padding:90px 0;}
+  .kicker{
+    font-weight:800;color:var(--coral);text-transform:uppercase;letter-spacing:1.2px;font-size:0.82rem;margin-bottom:10px;display:block;
+  }
+  .section-head{max-width:640px;margin-bottom:52px;}
+  .section-head h2{font-size:2.3rem;color:var(--ink);line-height:1.15;}
+  .section-head p{margin-top:14px;font-size:1.05rem;}
+
+  /* ---------- STATS ---------- */
+  .stats-band{background:var(--ink);padding:56px 0;}
+  .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
+  .stat{text-align:center;}
+  .stat .num{font-family:'Baloo 2';font-weight:800;font-size:2.6rem;color:var(--yellow);}
+  .stat .lbl{color:#C8D2E0;font-weight:700;margin-top:6px;font-size:0.92rem;}
+
+  /* ---------- HOW IT WORKS ---------- */
+  .steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;perspective:1000px;}
+  .step-card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:28px 22px;box-shadow:var(--shadow);transition:transform .1s ease, box-shadow .3s ease;
+    transform-style:preserve-3d;
+  }
+  .step-card:hover{box-shadow:var(--shadow-lg);}
+  .step-num{
+    width:40px;height:40px;border-radius:12px;background:var(--bg-soft);color:var(--teal-dark);
+    display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-weight:800;margin-bottom:16px;
+  }
+  .step-card h3{font-size:1.08rem;color:var(--ink);margin-bottom:8px;}
+  .step-card p{font-size:0.9rem;}
+  .steps-tutor{display:none;}
+
+  /* ---------- MATCH DEMO ---------- */
+  .match-panel{
+    background:var(--card);border:1px solid var(--line);border-radius:28px;
+    box-shadow:var(--shadow-lg);padding:36px;display:grid;grid-template-columns:280px 1fr;gap:36px;
+  }
+  .match-form label{font-weight:800;font-size:0.82rem;color:var(--ink);display:block;margin-bottom:8px;margin-top:18px;}
+  .match-form label:first-child{margin-top:0;}
+  .match-form select, .match-form input[type=range]{
+    width:100%;padding:12px 14px;border-radius:12px;border:2px solid var(--line);
+    font-family:'Nunito';font-weight:700;color:var(--ink);background:var(--bg-soft);font-size:0.95rem;
+  }
+  .range-val{font-weight:800;color:var(--teal-dark);font-size:0.85rem;margin-top:6px;}
+  .find-btn{
+    margin-top:24px;width:100%;background:var(--coral);color:#fff;padding:14px;border-radius:14px;
+    font-weight:800;font-size:0.98rem;box-shadow:0 10px 20px rgba(255,122,92,0.32);transition:transform .15s;
+  }
+  .find-btn:hover{transform:translateY(-2px);}
+  .match-results{display:flex;flex-direction:column;gap:14px;}
+  .match-results-empty{
+    height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:var(--ink-soft);text-align:center;gap:10px;min-height:280px;
+  }
+  .match-results-empty .big-emoji{font-size:2.6rem;}
+  .tutor-card{
+    display:flex;gap:16px;align-items:center;border:1px solid var(--line);border-radius:18px;padding:16px;
+    transition:transform .25s ease, box-shadow .25s ease; transform-style:preserve-3d;
+  }
+  .tutor-card:hover{box-shadow:var(--shadow);}
+  .avatar{
+    width:56px;height:56px;border-radius:16px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+    font-family:'Baloo 2';font-weight:800;color:#fff;font-size:1.2rem;
+  }
+  .tutor-info{flex:1;}
+  .tutor-info h4{font-size:1rem;color:var(--ink);}
+  .tutor-meta{display:flex;gap:10px;margin-top:4px;flex-wrap:wrap;}
+  .tag{background:var(--bg-soft);color:var(--ink-soft);font-size:0.74rem;font-weight:800;padding:3px 9px;border-radius:100px;}
+  .rating{color:var(--yellow);font-weight:800;font-size:0.85rem;margin-top:6px;}
+  .book-btn{
+    background:var(--teal);color:#fff;padding:9px 16px;border-radius:100px;font-weight:800;font-size:0.82rem;white-space:nowrap;
+    transition:background .2s;
+  }
+  .book-btn:hover{background:var(--teal-dark);}
+
+  /* ---------- SAFETY ---------- */
+  .safety-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;}
+  .safety-list{display:flex;flex-direction:column;gap:20px;}
+  .safety-item{display:flex;gap:16px;align-items:flex-start;}
+  .safety-icon{
+    width:46px;height:46px;border-radius:14px;background:var(--bg-soft);display:flex;align-items:center;
+    justify-content:center;font-size:1.3rem;flex-shrink:0;
+  }
+  .safety-item h4{font-size:1.02rem;color:var(--ink);margin-bottom:4px;}
+  .safety-item p{font-size:0.92rem;}
+
+  .flip-demo{perspective:1200px;}
+  .flip-card-inner{
+    position:relative;width:100%;height:300px;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.4,.2,.2,1);
+  }
+  .flip-card-inner.flipped{transform:rotateY(180deg);}
+  .flip-face{
+    position:absolute;inset:0;border-radius:24px;padding:28px;display:flex;flex-direction:column;
+    backface-visibility:hidden;box-shadow:var(--shadow-lg);
+  }
+  .flip-front{background:linear-gradient(135deg, var(--teal), var(--teal-dark));color:#fff;}
+  .flip-back{background:var(--card);border:1px solid var(--line);transform:rotateY(180deg);}
+  .flip-front .fc-emoji{font-size:2.4rem;margin-bottom:14px;}
+  .flip-front h4{color:#fff;font-size:1.15rem;margin-bottom:8px;}
+  .confirm-row{display:flex;gap:12px;margin-top:auto;}
+  .confirm-btn{
+    flex:1;background:rgba(255,255,255,0.18);border:2px solid rgba(255,255,255,0.5);color:#fff;
+    padding:12px;border-radius:12px;font-weight:800;font-size:0.85rem;transition:background .2s;
+  }
+  .confirm-btn:hover{background:rgba(255,255,255,0.3);}
+  .confirm-btn.done{background:#fff;color:var(--teal-dark);border-color:#fff;}
+  .flip-back h4{color:var(--ink);font-size:1.15rem;margin-bottom:10px;}
+  .flip-back .check-row{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--ink);margin-bottom:10px;font-size:0.92rem;}
+  .flip-back .check-row span.dot{width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.8rem;}
+  .reset-link{margin-top:auto;font-weight:800;color:var(--teal-dark);font-size:0.85rem;text-decoration:underline;align-self:flex-start;}
+
+  .parent-toggle-box{
+    margin-top:8px;background:var(--bg-soft);border:1px solid var(--line);border-radius:18px;padding:20px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .switch{width:52px;height:30px;background:#D8DFDA;border-radius:100px;position:relative;transition:background .25s;flex-shrink:0;}
+  .switch.on{background:var(--teal);}
+  .switch .knob{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.2);transition:transform .25s;}
+  .switch.on .knob{transform:translateX(22px);}
+  .badge-locked{display:none;margin-top:10px;font-size:0.78rem;font-weight:800;color:var(--teal-dark);background:#fff;padding:6px 12px;border-radius:100px;width:fit-content;}
+  .badge-locked.show{display:flex;align-items:center;gap:6px;}
+
+  /* ---------- PRICING ---------- */
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .price-card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:32px 26px;
+    box-shadow:var(--shadow);position:relative;
+  }
+  .price-card.highlight{border:2px solid var(--teal);box-shadow:var(--shadow-lg);}
+  .price-tag{position:absolute;top:-13px;left:26px;background:var(--yellow);color:var(--ink);font-weight:800;font-size:0.75rem;padding:5px 12px;border-radius:100px;}
+  .price-card h3{font-size:1.15rem;color:var(--ink);margin-bottom:6px;}
+  .price-card .price{font-family:'Baloo 2';font-weight:800;font-size:1.8rem;color:var(--teal-dark);margin:12px 0 18px;}
+  .price-card ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:11px;}
+  .price-card li{font-size:0.9rem;color:var(--ink-soft);display:flex;gap:8px;align-items:flex-start;}
+  .price-card li::before{content:"✓";color:var(--teal-dark);font-weight:800;}
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testi-wrap{position:relative;max-width:720px;margin:0 auto;text-align:center;}
+  .testi-slide{display:none;}
+  .testi-slide.active{display:block;animation:fadeIn .5s ease;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .testi-quote{font-family:'Baloo 2';font-size:1.4rem;color:var(--ink);line-height:1.4;}
+  .testi-who{margin-top:18px;font-weight:800;color:var(--teal-dark);}
+  .testi-dots{display:flex;gap:8px;justify-content:center;margin-top:28px;}
+  .testi-dots button{width:10px;height:10px;border-radius:50%;background:var(--line);transition:background .2s;}
+  .testi-dots button.active{background:var(--coral);}
+
+  /* ---------- FAQ ---------- */
+  .faq-item{border-bottom:1px solid var(--line);padding:20px 0;}
+  .faq-q{display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:800;color:var(--ink);font-size:1.02rem;}
+  .faq-q .plus{transition:transform .3s;font-size:1.3rem;color:var(--teal-dark);}
+  .faq-item.open .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .faq-a p{padding-top:12px;font-size:0.94rem;}
+
+  /* ---------- CTA / FOOTER ---------- */
+  .cta-band{
+    background:linear-gradient(135deg, var(--teal) 0%, var(--purple) 100%);
+    border-radius:32px;margin:0 28px;padding:56px 40px;text-align:center;color:#fff;
+    max-width:1124px; margin-left:auto; margin-right:auto;
+  }
+  .cta-band h2{color:#fff;font-size:2rem;}
+  .cta-band p{color:rgba(255,255,255,0.9);margin-top:10px;}
+  .cta-band .btn-primary{background:#fff;color:var(--teal-dark);margin-top:24px;box-shadow:0 10px 24px rgba(0,0,0,0.15);}
+  footer{padding:60px 0 30px;color:var(--ink-soft);font-size:0.88rem;}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px;margin-bottom:36px;}
+  .footer-grid h5{color:var(--ink);font-family:'Baloo 2';font-size:0.98rem;margin-bottom:14px;}
+  .footer-grid ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:9px;}
+  .footer-bottom{border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+  /* ---------- MODAL ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(34,49,74,0.55);z-index:200;
+    display:none;align-items:center;justify-content:center;padding:20px;
+  }
+  .modal-overlay.show{display:flex;}
+  .modal-box{
+    background:var(--card);border-radius:26px;max-width:420px;width:100%;padding:32px;
+    box-shadow:var(--shadow-lg);position:relative;
+  }
+  .modal-close{position:absolute;top:18px;right:18px;font-size:1.4rem;color:var(--ink-soft);}
+  .modal-box h3{font-size:1.3rem;color:var(--ink);margin-bottom:6px;}
+  .modal-step{display:none;}
+  .modal-step.active{display:block;}
+  .time-slots{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px;}
+  .time-slot{border:2px solid var(--line);border-radius:12px;padding:12px;font-weight:800;font-size:0.88rem;text-align:center;color:var(--ink-soft);transition:all .18s;}
+  .time-slot.selected{border-color:var(--teal);background:var(--bg-soft);color:var(--teal-dark);}
+  .modal-next{margin-top:24px;width:100%;background:var(--teal);color:#fff;padding:13px;border-radius:12px;font-weight:800;}
+  .modal-next:disabled{background:#D8DFDA;cursor:not-allowed;}
+  .success-icon{width:70px;height:70px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 18px;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:960px){
+    .hero-inner{grid-template-columns:1fr;}
+    .orbit-stage{height:320px;order:-1;}
+    .hero h1{font-size:2.3rem;}
+    .stats-grid{grid-template-columns:1fr;gap:26px;}
+    .steps-grid{grid-template-columns:1fr 1fr;}
+    .match-panel{grid-template-columns:1fr;}
+    .safety-grid{grid-template-columns:1fr;}
+    .price-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .nav-links{display:none;}
+    .burger{display:flex;}
+  }
+  @media(max-width:600px){
+    .steps-grid{grid-template-columns:1fr;}
+    .cta-band{padding:40px 24px;}
+    .footer-grid{grid-template-columns:1fr;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+  :focus-visible{outline:3px solid var(--purple); outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="logo"><img class="logo-dot" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKsAAACrCAYAAAAZ6GwZAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAq6ADAAQAAAABAAAAqwAAAABltjyCAAARp0lEQVR4Ae2dbYge1RXHxyaYFTSJChKhMQlVsb6Q3dBiMOImaEEjJJt+0Fgq2UCpKQqJHxqLftjdDwqxlGygopaCGxSNUNwoaC2tTTa+oCBmbdUPjRhXBQuiZNUPTUDa+5vttE/GZ16e+8y5L8+eI3Ge2Zm599xz/3Puueeec+eM5Nzf/ztRUglEIIHvRMCjsqgSSCWgYFUgRCMBBWs0XaWMKlgVA9FIQMEaTVcpowpWxUA0ElCwRtNVyqiCVTEQjQQUrNF0lTKqYFUMRCMBBWs0XaWMKlgVA9FIQMEaTVcpowpWxUA0ElCwRtNVyqiCVTEQjQQUrNF0lTKqYFUMRCMBBWs0XaWMKlgVA9FIQMEaTVcpowpWxUA0ElCwRtNVyqiCVTEQjQQUrNF0lTKqYFUMRCOBhdFwGjCjKy86p5C7E7OnkhOzJwuv64X6ElCw1pAVYOy/6rxk5fKzk9VXnp8sXXJmer50yaL0d40iDGBPJR9+9FV6nP77F8nMx18l0+98kfBbwVxHgklyhm7M9m1Brb/2wqT/yvOSwXUXJvwGnJL04UdfG9B+njz7wkxy+NV/pqCWrC/WshWspufQkGjObVsvSYZuXiEOziqwAN7Dr3ya7D9wLD1W3T9frs9rsKI1N9+0Ihn+ySXeAVoEOIB78PmZZN+j7857jTvvwIoWHb7t4mTzxhXpEF8EkhD/noEWrTsfad6AFZDu3HF5smvHlcFq0boARNuO7XkrmXjqWN1HeuK+ngdrL4E0j7j5BtqeBuvOHVcko/esiV6T5kGaP58voO1JsDJx2nv/2nSGn+/YXj6fePJYMvbg0Z6diPUUWBnyR+7pT+3SXgZlWdtYfBh/5B1j0x4tuy3Kaz0DVrTpY7+9Lll50dlRdkTTTGMabNj0Qk9p2Z4IZNn7wNXJoec2KlBbEM9Le3RqyLjpLmn5a9w/FyRnbRqNtQms2U8+fkOy9cffi7UJonz39S2YW5FbvCj5018/Ea3LReHRmgH9V52fAlWH/XowIfZgy+0vRW0WRGkGbDNDmw779UCa3cXLPSez4nDG7N5Qj9GBdeSegWTioet63ncqARhGIQALcGOkqMAKUHHyK9lLIGbARgNWBao9QPNPEp8bo4aNAqwK1Dzcuj+PEbDBewNY3x9/YG33vSNQAmkqc2kpp5LZL7+da8WK2pLFZ6b+37lUmPBsRVa8WDzAWxA6BQ3WIRNzOvnEDUHIkE4lnnTqtU9N9L596gkrbWQlDF7jJmWmjvBiWe0KFqw4/FmBkc5/KutMALrvkXdNXhQAlQl4BrysMpHv5dNnDGAHBifThMYymfi8FiRYGT4Bqq/OA5hEL0kBtKjDSa8Z2b3GW7uJ2tp+15Ei9rz/Pcjl1od/s85Lygng3H7Xy2nEEprGNWH/oslnPv7aZNfOpXy75AH/66wZTV5/8zOX1dauKzjN6mNCBTDRKK41aVUv+dK0A4MHg5xwBQVWH3YqcZ+jJp8pVMIUYiGEJWZXFKr9GpQZ4HLtmg7ZsOn55MAzH7jCgFU9qRfCbH7h0jRgUtu3aGFwkVrBLAowI3a1Zr3fZIUy88VGjIWY/PByubKld/3iCi/zhrL+CAKsDP8jjtb8GfaH7zwStIumqMOy4Rl/rwvae//VLqqpXUcQYB3ZPeDEXXP3vW8EbZ/W6TXMgi23/yXZbzStNDHS7TIriKGQ9wkWWvX49C3i8th+58tmU4h/iNfjsoIJk3O2zfhmJYmXY1X/00GMRN41K1pVmtCovQZUZDZs3G3SGpbJVija1atmdaFVO3VN0TnDWy82a/fL0jV89mSFPjSOemzG/QfeTw6/RmyA+0WDlJE2/8OLwrKtFIWiXb2CldRpHN9SxGrQrntfr1U8IN35c/bCujxZaiKlqmj0welk7NfTVbc5uQ7vR6e2iNr97K016nkvAm9gldaq2cwZrVBFafT8wRvTna2r7m29jrbdMPRiEFqWNgBYgCtBIWhXbzartK2KT1ISqAACE+EQIDdA8U28nGMPyq3E8RL4tl29gBWtKjn8Y6fWtSlTsP3XLrUBXAZYKY3WCU/jD5twRqFQRvjYvHFlJ+w0fq8XsK5ft6zxhmQFAtK6a/0ju/s7HvqzelqPAHaXsXdDIAJy6owoNrwSNC45kaviyQtYiaySorrxmGmAyC/7G2Nj5x1mYiZkL3bCJC/rPrMxmxQNbbxIqujKcp2DFRNAKgaAnaDrDoPrjWuqSQKow7de3GSR1mWNGy+IlHbddtul3l5K52CVfDNxr9SlbcaX2jRJmjed8ApQpbQrL6WUsqlqo3OwSsVlolXrTqoQisQMfrWx6UIhWe0q5xsvk59TsEqaAIT9dULZylQnz1TdK1FmVZ1F1yW1K1nHPsgpWPlqnwQRl1rXVpWoP9Qy0a4SNGcKyPRlGb9Owcq3pyRo36Odz35ZfWqaJMrshke0q9RLvN6kjrsmp2DFTydBNh3CR36bpk5s5qbrLiqPlHIJWu1hJ0JnYJWaRQJUG5BMmQ/6Nk1EZIVGbAsk4cbqac0q5e7gS9I2NGGA1XQn8kXrjJhM+l5LhxfaKLGPFd4UFJBLcqZZxSZXlsM5nbjvd+81JusxEzLYarPic91rNpSTekk7Ydz2ha6qQ8L9V1anM7BKNczGXs0EMv7oe6cBLPt7p0dAOpqLbc0mk3ygAy3rk1o1fpN8sGuMS3IG1hXLm++wboCKkNGuGzabeNQuPAM8Sxl5yjQqL+nk49fnLzs9l7JbpSbMRcJxBlYJzcqeqN1SBjYbwBY9C1Bb28s5n+f0Sewl2zQtMRvouSSHYG1eszY1cQB0q9b8oXaaygnzkpDSMrD+ubZauV2MAJtG+Jxwvf1O85sFu16xW+jqzZCYOTbtKyWvauKp9xPARqAL2jHrEADNStmUSRbkHgBbROy12o6YcGE/NvWStauj6G9Nez6ox7Ut7gSsEkBFWBIdAChxa/HPlsoClJlw+fimqo0v2rb9Us85MQPkwHpSSi7W5QLUsvb6mnBJvNhl7bQWYMmDTsBaUn9XlyQ6oCuGzMN1/Mk+JlwSslKwdosWz89n/tUqNlxPuMps7CpeQ7nuxGYNpbG2fEjteOJzwmUrC5/PRW0GuBIcu/ZJTVBCWOFyJcdu61Gw1pAg9l7dTTNqFHfaLa4mXJkL7rTKuzyRsIPLWHICVqlGufTzoVnRsBLkYsIlMRmS6tciGccN1i52UikSSNnfiUW4+756G72VldPuGhMuvlErRQrWDiQrsTYt0QFVTWKLHnYnlCC+yjJ0s0zqz2qBCKkTs2793E40Kx0rMWT4SK2gLWyj2W3EF+W0I7YBlTBvJF5sVvtckjOwSsymXcdTtnaMlIcAUEl8Ygm7uGmaEYjkKuPRGVhnPm4+RK01DK+skRLXGCli8RAAVAnN2nQgUVU/OQOrhGalA1wHALcKNBYPQZ0l4NZ21f0tYdqV1e0MrFJvoY8sy1aBxuAhKApZbG2HzW/XoY7uwGpSgiWo7lq8RN1ZmdIegm4/H1QWspi1odMjsb09q1lpmIT7Ssoe67TzJD0E4yYlxnaCBFAlbHuJOUiVzJ1pVhiZevXTKn46vo7d6mujsDyzkh4C2xiCbVtldvw7aLlfQ15mnZw7BevhV/6/CUQnTFbdK7WNZlW9+esuPASdzuolTADaLeVnzsu09dwpWKXeRjrEdphsFUYTv0PyEPClcQkTgDZKeHeq5L8gOWvTaNVNTV3/18lvTDIeNlTzma59ixYkUjuPdNp+OpI08Ruv/26nj1ben72UdfbqmnziRyL+VZSOD1k71az0hITdSrl8qkjiJaBsG/LtIZDSqsii042bbeTX7hnnYJXayobGSX8Irp0Ay/7m00MwYoJiJIhRw4e9Slvcg9WE2Uk1Fu2aDZMSHWVTpg8PgaRWPSzg0akrV+dghTEpU4Cy995/NYdgyLWHAFNISqsiVKmvwNTpMC9glfySCJ4Bn9v0tBM6Q6erLANMIQkPAO1iRGTlyhc59QZkjcQr8P1Ll4oN2Wt/cEHy9ORx58uBWfvaHV14CFYZrTr6KxlblTax5btPsHr7hDsakLhNKUILsE1PaDRu9ruS+hwoJkeniwZ15cPLtqr/6bq3i9znxQygJYBJaqJF+bwMvreZhI88SXoIpIBKGyQ/D5+XUdG5N7DOCUDmSyJZY0nC6zZiKSuryaOUh6BJHlvL8umuauXDK1iltSsNnTA5TaG5syQ9BK2d29RvFgEArG/yClYaL/WdplbBYhuHBlg6X8pD0Nr2bn/D57jgJ+E74c87WNGu0st32HIhApa2S+1D0AkIyu7FVmUkCIG8uK7yDZ82W4gPm+/Y9/UtyF9q7Jyyd2y/LJk1gn/9zc8aK7fbguDlXLM3P+620Aituv3OI8GwFQRYeXNPnvpGJEopL+ksEqpO1FL+WanzF1/6RCwarRueBwYng9GqtMO7GZAJkyglSVdWVg9Hdj45OjUUVJRWaB4Cdp0JYVLV2m/BgBWm7r7vDWdvMhMu7FiCPkKgzEMQAkDgYXTPWyGI5TQeggIrqb0unc+soT/20HXJ8elbg9CygCQED8GW2//sTGmchsaKk6DACq8uzYFMNoD2+PQtidQ+U1k9dY68sBNPHqtzq8g9Y3v8rv+XNcpbbEAZU7iajk5tEYseKquba4Bl/4FjzmzojB92ENx5xxXpUnH2N5dH0lW2/FRmD9om2hEkWGlYZlNKrndXCZBheczYbmQ3SOx5QP3EMGy+aUWaluO7rezdFYLNXNQvwYIVhon8Z2gOgRieSSWfem0uptMWvARHr792WTJ4zYXpXqw+AZrJFYCGDlR4DRqsMIibSXJHaOqwIWbvAJgjnT375cn0d/YJn6WLz0zD9ZYsXpQe2UAOoIYAznx78af6jFPN81N0HvynhTIXSmiABXQM4bHTwednogAqcg5iBauqw0lSO8P81wvgqGqr6+uXmYyN0Jagi2QQBVhhXgFb1IXd/50laJafQ55c0crg/KxlosckwA+o1LwEbDd+a56T4hKjAivNALChh9UVizvcK9jgLD+HOAHMpBYdWGGcVS6SAUMftjIhx3JkJQ8NGypFCVaESYRWDL7BUDu+iK9QEy3hN5oJVjvh4uMky+CsvoVBBi+34zmGv6394QVBegiCXxSo27msdo3sXuMtnqAunzHdNzB4MF34CIXnaM2AvAAJPsEskM7nytfby+eheQh6BqyAhgnXsMkZ2n7XEZ18NfAWMeEKyUPQU2DN+ifTsvPFJ5vZ7ln7mzymAeqBBBNFPcEq6xQ6kFUvzAKyR0PbN6CM97rXaOOefX9LbvvZoeTAMx+ILUmzJAv5TrLsWbBmHU6HElTcS6BtBSmZsezKCPFySqV149LyHUPQM96ADJxVR4Y1wg75MmHIqzXt2oFv+dk/zqSZDAC2iMjclRhJqJPFGEIjfdC8A2smZIBKGgkfNQs5mguAMCowOtRNVZ+bGN0s4sZjEju3etj8V86zvik6zluwtgqEzgWwoQCXLIRnX/ioI4C2toffkmlBaFYAW6bd8/w0ca5gzUkRjQtw+V7X4LplIsNprkrjZvvqfykzpM7Ypszky5VMC8LjgovQJSlYa0gb8KZpKcvPSVYsPzsdXm1SVAAhwyj/3n738/TI0C6poSTTglyHbCpYa4C17BZAC2FK5AlQQidm5/Kz8tddnbNHrdSmysNGu+53tM+BgtUVYjzWg2nDzjMkMTZNjAqYA5KjQ8azgjWThB6Dl0BPLrcGL3Vl0EoCClYrselDPiSgYPUhda3TSgIKViux6UM+JKBg9SF1rdNKAgpWK7HpQz4koGD1IXWt00oCClYrselDPiSgYPUhda3TSgIKViux6UM+JKBg9SF1rdNKAgpWK7HpQz4koGD1IXWt00oCClYrselDPiSgYPUhda3TSgIKViux6UM+JKBg9SF1rdNKAgpWK7HpQz4koGD1IXWt00oCClYrselDPiSgYPUhda3TSgIKViux6UM+JKBg9SF1rdNKAgpWK7HpQz4k8B9elO55RPqQhgAAAABJRU5ErkJggg==" alt="iQurious logo"> iQurious</div>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#match">Find a tutor</a>
+      <a href="#safety">Safety</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px;">
+      <a href="#match" class="nav-cta">Get started</a>
+      <button class="burger" id="burgerBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#how">How it works</a>
+    <a href="#match">Find a tutor</a>
+    <a href="#safety">Safety</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div>
+      <span class="eyebrow">🧡 Built for Metro Manila learners</span>
+      <h1 id="heroHeadline">Where <span class="hl">curiosity</span> meets <span class="hl2">clarity</span>.</h1>
+      <p class="lead" id="heroLead">Verified tutors. Safe sessions. Real progress you can actually see — matched to how your child learns best.</p>
+
+      <div class="role-toggle" role="group" aria-label="Choose your role">
+        <button class="active" id="roleStudentBtn" onclick="setRole('student')">🎓 I'm a student / parent</button>
+        <button id="roleTutorBtn" onclick="setRole('tutor')">✏️ I'm a tutor</button>
+      </div>
+
+      <div class="hero-actions">
+        <a href="#match" class="btn-primary" id="heroPrimaryBtn">Find my tutor →</a>
+        <a href="#how" class="btn-ghost">See how it works</a>
+      </div>
+      <p class="hero-note">🔒 ID-verified tutors &nbsp; • &nbsp; 👨‍👩‍👧 Parent-controlled accounts for minors</p>
+    </div>
+
+    <div class="orbit-stage">
+      <div class="float-chip c1">⭐ 4.9 average rating</div>
+      <div class="float-chip c2">✅ Session confirmed</div>
+      <div class="ring ring1">
+        <div class="moon m1">📐</div>
+        <div class="moon m3">🔬</div>
+      </div>
+      <div class="ring ring2">
+        <div class="moon m2">🎨</div>
+        <div class="moon m4">📖</div>
+      </div>
+      <div class="orbit-core"><span>CLARITY</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-band">
+  <div class="wrap stats-grid">
+    <div class="stat"><div class="num" data-count="22.4">0</div><div class="lbl">Million students in basic education nationwide</div></div>
+    <div class="stat"><div class="num" data-count="1650">0</div><div class="lbl">Registered tutoring services across the Philippines</div></div>
+    <div class="stat"><div class="num" data-count="200000" data-suffix="+">0</div><div class="lbl">ALS learners who deserve flexible, guided support</div></div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section-pad" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">How it works</span>
+      <h2 id="howTitle">Four steps to a tutor who actually fits</h2>
+      <p id="howSub">No more scrolling through Facebook groups hoping someone replies.</p>
+    </div>
+    <div class="steps-grid steps-student">
+      <div class="step-card tilt"><div class="step-num">1</div><h3>Tell us what you need</h3><p>Subject, grade level, learning style, budget, and whether you'd rather meet online or in person.</p></div>
+      <div class="step-card tilt"><div class="step-num">2</div><h3>Get matched instantly</h3><p>Our matching system suggests verified tutors who actually fit — not just whoever's available.</p></div>
+      <div class="step-card tilt"><div class="step-num">3</div><h3>Book and meet safely</h3><p>Pay through the platform, join by video or onsite, and confirm the session on both ends.</p></div>
+      <div class="step-card tilt"><div class="step-num">4</div><h3>Track real progress</h3><p>Rate the session and reflect on what was learned — so growth stays visible, not guesswork.</p></div>
+    </div>
+    <div class="steps-grid steps-tutor">
+      <div class="step-card tilt"><div class="step-num">1</div><h3>Get verified</h3><p>Submit a valid ID and proof of educational background — no shortcuts on trust.</p></div>
+      <div class="step-card tilt"><div class="step-num">2</div><h3>Run a demo session</h3><p>Show your teaching style so we can set your baseline and match you well.</p></div>
+      <div class="step-card tilt"><div class="step-num">3</div><h3>Build your profile</h3><p>List subjects, modality, availability, and location so the right students find you.</p></div>
+      <div class="step-card tilt"><div class="step-num">4</div><h3>Teach and get paid</h3><p>Keep 95-97% of every session — we only earn when you do.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MATCH DEMO -->
+<section class="section-pad" id="match" style="background:var(--bg-soft);">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Try the matching demo</span>
+      <h2>Find a tutor in under a minute</h2>
+      <p>This is a live mock-up — adjust the filters and watch the matches update.</p>
+    </div>
+    <div class="match-panel">
+      <div class="match-form">
+        <label for="subjSelect">Subject</label>
+        <select id="subjSelect">
+          <option value="any">Any subject</option>
+          <option value="Math">Math</option>
+          <option value="Science">Science</option>
+          <option value="English">English</option>
+          <option value="Filipino">Filipino</option>
+          <option value="Reading">Reading & Writing</option>
+          <option value="Coding">Coding</option>
+          <option value="Art">Art</option>
+          <option value="Exam Prep">College Entrance Exam Prep</option>
+        </select>
+
+        <label for="modeSelect">Modality</label>
+        <select id="modeSelect">
+          <option value="any">Online or onsite</option>
+          <option value="Online">Online only</option>
+          <option value="Onsite">Onsite only</option>
+        </select>
+
+        <label for="formatSelect">Session format</label>
+        <select id="formatSelect">
+          <option value="any">Individual or group</option>
+          <option value="Individual">Individual</option>
+          <option value="Group">Group</option>
+        </select>
+
+        <label for="budgetRange">Max budget — <span class="range-val" id="budgetOut">₱600/hr</span></label>
+        <input type="range" id="budgetRange" min="200" max="900" step="50" value="600">
+
+        <button class="find-btn" onclick="runMatch()">🔍 Find my tutor</button>
+      </div>
+
+      <div class="match-results" id="matchResults">
+        <div class="match-results-empty">
+          <div class="big-emoji">🧭</div>
+          <p>Set your filters and tap <strong>Find my tutor</strong> to see who's a match.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAFETY -->
+<section class="section-pad" id="safety">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Safety first</span>
+      <h2>Built so parents can relax and kids can focus</h2>
+      <p>Every session is accountable on both ends — try the confirmation demo below.</p>
+    </div>
+    <div class="safety-grid">
+      <div class="safety-list">
+        <div class="safety-item"><div class="safety-icon">🪪</div><div><h4>ID and credential verification</h4><p>Every tutor submits a valid ID and proof of educational background before onboarding.</p></div></div>
+        <div class="safety-item"><div class="safety-icon">🎬</div><div><h4>Demo teaching evaluation</h4><p>Tutors run a baseline session that's reviewed before they can accept students.</p></div></div>
+        <div class="safety-item"><div class="safety-icon">⏱️</div><div><h4>Dual time-in / time-out</h4><p>Both sides confirm attendance on their own device — payment only releases once both confirm.</p></div></div>
+        <div class="safety-item"><div class="safety-icon">👨‍👩‍👧</div><div><h4>Parental oversight for minors</h4><p>Guardians manage bookings, payments, and messages so kids only handle the learning part.</p></div></div>
+
+        <div class="parent-toggle-box">
+          <div>
+            <h4 style="margin-bottom:2px;">Try it: parental control</h4>
+            <p style="font-size:0.85rem;">Toggle on to see a minor's profile locked to guardian management.</p>
+            <div class="badge-locked" id="lockedBadge">🔒 Managed by verified guardian</div>
+          </div>
+          <button class="switch" id="parentSwitch" onclick="toggleParent()" aria-label="Toggle parental control"><div class="knob"></div></button>
+        </div>
+      </div>
+
+      <div class="flip-demo">
+        <div class="flip-card-inner" id="flipCard">
+          <div class="flip-face flip-front">
+            <div class="fc-emoji">📍</div>
+            <h4>Onsite session — Math with Tutor Iah</h4>
+            <p style="color:rgba(255,255,255,0.85);">Both devices must confirm before payment releases. Try tapping both.</p>
+            <div class="confirm-row">
+              <button class="confirm-btn" id="btnTimeIn" onclick="confirmSide('in')">Tutor: Time in</button>
+              <button class="confirm-btn" id="btnTimeOut" onclick="confirmSide('out')">Tutee: Time in</button>
+            </div>
+          </div>
+          <div class="flip-face flip-back">
+            <h4>✅ Session confirmed</h4>
+            <div class="check-row"><span class="dot">✓</span> Tutor attendance verified</div>
+            <div class="check-row"><span class="dot">✓</span> Tutee attendance verified</div>
+            <div class="check-row"><span class="dot">✓</span> Payment released securely</div>
+            <a class="reset-link" onclick="resetFlip()">↺ Reset demo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section-pad" id="pricing" style="background:var(--bg-soft);">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">How iQurious earns</span>
+      <h2>We only earn when you learn</h2>
+      <p>No sign-up fees, no paywalled learning. Just a small commission per completed session.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <h3>Free — for everyone</h3>
+        <div class="price">₱0</div>
+        <ul>
+          <li>Tutor matching and search</li>
+          <li>Booking and scheduling</li>
+          <li>Session feedback tracking</li>
+          <li>Dual attendance confirmation</li>
+        </ul>
+      </div>
+      <div class="price-card highlight">
+        <span class="price-tag">Core model</span>
+        <h3>Per completed session</h3>
+        <div class="price">3–5%</div>
+        <ul>
+          <li>Commission only on completed sessions</li>
+          <li>Secure escrow-style payment handling</li>
+          <li>Applies to individual and group bookings</li>
+          <li>Tutors keep 95–97% of session earnings</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <h3>Premium add-ons</h3>
+        <div class="price">Optional</div>
+        <ul>
+          <li>Students: faster booking, calendar sync, no ads</li>
+          <li>Tutors: profile boost, performance analytics</li>
+          <li>Never required to access core learning</li>
+          <li>Purely quality-of-life, never pay-to-learn</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section-pad">
+  <div class="wrap">
+    <div class="testi-wrap">
+      <div class="testi-slide active">
+        <p class="testi-quote">"My son used to dread Math. Now he asks when his next session is. I like that I still control the bookings."</p>
+        <p class="testi-who">— Parent of a Grade 5 student, Quezon City</p>
+      </div>
+      <div class="testi-slide">
+        <p class="testi-quote">"I finally have steady students without posting in five different Facebook groups a week."</p>
+        <p class="testi-who">— Verified tutor, Physics & Chemistry</p>
+      </div>
+      <div class="testi-slide">
+        <p class="testi-quote">"The group session split the cost with my blockmate and we both actually understood thermodynamics after."</p>
+        <p class="testi-who">— University student, Engineering</p>
+      </div>
+      <div class="testi-dots">
+        <button class="active" onclick="showTesti(0)"></button>
+        <button onclick="showTesti(1)"></button>
+        <button onclick="showTesti(2)"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section-pad" id="faq" style="background:var(--bg-soft);">
+  <div class="wrap" style="max-width:760px;">
+    <div class="section-head" style="margin-bottom:24px;">
+      <span class="kicker">Questions</span>
+      <h2>Good to know</h2>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Is iQurious only for K-12 students?</span><span class="plus">+</span></div>
+      <div class="faq-a"><p>No. iQurious also supports ALS learners, certification and licensure exam takers, and university students — anyone who wants structured, verified academic support.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>How does iQurious keep tutors accountable?</span><span class="plus">+</span></div>
+      <div class="faq-a"><p>Every session requires dual time-in and time-out confirmation from both devices, plus a post-session rating and reflection. Tutors who fall below the minimum quality threshold are reviewed.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>What happens if my child's tutor is a stranger?</span><span class="plus">+</span></div>
+      <div class="faq-a"><p>All tutors are ID-verified and credential-checked before onboarding. For minors, guardians manage all bookings, payments, and messages — tutors only interact academically.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Can two students split one tutor's session?</span><span class="plus">+</span></div>
+      <div class="faq-a"><p>Yes — group sessions let connected learners book the same tutor together. Payment splits automatically and each learner's record stays accurate.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-pad">
+  <div class="cta-band">
+    <h2>Ready to stop guessing and start matching?</h2>
+    <p>Join the Quezon City pilot — for students, parents, and tutors alike.</p>
+    <a href="#match" class="btn-primary">Get started free →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="logo" style="margin-bottom:12px;"><img class="logo-dot" src="data:image/png;base64,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" alt="iQurious logo"> iQurious</div>
+        <p style="max-width:260px;">Where curiosity meets clarity — a safer, structured way to find the right tutor in Metro Manila.</p>
+      </div>
+      <div><h5>Platform</h5><ul><li>How it works</li><li>Find a tutor</li><li>Become a tutor</li><li>Pricing</li></ul></div>
+      <div><h5>Trust</h5><ul><li>Safety center</li><li>Verification process</li><li>Parental controls</li></ul></div>
+      <div><h5>Company</h5><ul><li>About</li><li>Startup QC</li><li>Contact</li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 iQurious. A student concept for Startup QC.</span>
+      <span>Made by learners, for learners.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- BOOKING MODAL -->
+<div class="modal-overlay" id="bookModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-step active" id="modalStep1">
+      <h3 id="modalTutorName">Book a session</h3>
+      <p>Pick a time that works for you.</p>
+      <div class="time-slots">
+        <div class="time-slot" onclick="selectSlot(this)">Mon · 4:00 PM</div>
+        <div class="time-slot" onclick="selectSlot(this)">Tue · 6:30 PM</div>
+        <div class="time-slot" onclick="selectSlot(this)">Wed · 2:00 PM</div>
+        <div class="time-slot" onclick="selectSlot(this)">Sat · 10:00 AM</div>
+      </div>
+      <button class="modal-next" id="modalNextBtn" disabled onclick="goStep2()">Confirm booking</button>
+    </div>
+    <div class="modal-step" id="modalStep2">
+      <div class="success-icon">✓</div>
+      <h3 style="text-align:center;">Session requested!</h3>
+      <p style="text-align:center;">This mock-up would now notify the tutor and hold the slot. In the real platform, payment is only released after both sides confirm attendance.</p>
+      <button class="modal-next" onclick="closeModal()" style="margin-top:22px;">Nice</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---- Mobile menu ----
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burgerBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+  // ---- Role toggle ----
+  function setRole(role){
+    const studentBtn = document.getElementById('roleStudentBtn');
+    const tutorBtn = document.getElementById('roleTutorBtn');
+    const headline = document.getElementById('heroHeadline');
+    const lead = document.getElementById('heroLead');
+    const primaryBtn = document.getElementById('heroPrimaryBtn');
+    const howTitle = document.getElementById('howTitle');
+    const howSub = document.getElementById('howSub');
+    const stepsStudent = document.querySelector('.steps-student');
+    const stepsTutor = document.querySelector('.steps-tutor');
+
+    if(role === 'student'){
+      studentBtn.classList.add('active'); tutorBtn.classList.remove('active');
+      headline.innerHTML = 'Where <span class="hl">curiosity</span> meets <span class="hl2">clarity</span>.';
+      lead.textContent = "Verified tutors. Safe sessions. Real progress you can actually see — matched to how your child learns best.";
+      primaryBtn.textContent = 'Find my tutor →';
+      howTitle.textContent = 'Four steps to a tutor who actually fits';
+      howSub.textContent = "No more scrolling through Facebook groups hoping someone replies.";
+      stepsStudent.style.display = 'grid'; stepsTutor.style.display = 'none';
+    } else {
+      tutorBtn.classList.add('active'); studentBtn.classList.remove('active');
+      headline.innerHTML = 'Turn your <span class="hl">expertise</span> into <span class="hl2">income</span>.';
+      lead.textContent = "Get verified once, then let students who actually fit your teaching style find you.";
+      primaryBtn.textContent = 'Apply as a tutor →';
+      howTitle.textContent = 'Four steps to your first booked student';
+      howSub.textContent = "One screening. Then the platform handles scheduling, payment, and trust.";
+      stepsStudent.style.display = 'none'; stepsTutor.style.display = 'grid';
+    }
+  }
+
+  // ---- Stat counters ----
+  const counters = document.querySelectorAll('.stat .num');
+  let countersStarted = false;
+  function animateCounters(){
+    if(countersStarted) return;
+    countersStarted = true;
+    counters.forEach(el => {
+      const target = parseFloat(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      const isDecimal = target % 1 !== 0;
+      let current = 0;
+      const step = target / 60;
+      const interval = setInterval(() => {
+        current += step;
+        if(current >= target){ current = target; clearInterval(interval); }
+        el.textContent = (isDecimal ? current.toFixed(1) : Math.round(current).toLocaleString()) + suffix;
+      }, 20);
+    });
+  }
+  const statsBand = document.querySelector('.stats-band');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) animateCounters(); });
+  }, {threshold:0.4});
+  obs.observe(statsBand);
+
+  // ---- Tilt cards ----
+  document.querySelectorAll('.tilt, .tutor-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = `rotateY(${x*10}deg) rotateX(${-y*10}deg) translateZ(4px)`;
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = 'rotateY(0) rotateX(0)'; });
+  });
+
+  // ---- Matching demo ----
+  const TUTORS = [
+    {name:"Iah Santos", subj:"Math", mode:"Onsite", fmt:"Individual", rate:350, rating:4.9, color:"#3EC6C0", initials:"IS"},
+    {name:"Marco Villareal", subj:"Science", mode:"Online", fmt:"Individual", rate:450, rating:4.8, color:"#8B7FE8", initials:"MV"},
+    {name:"Dani Reyes", subj:"English", mode:"Online", fmt:"Group", rate:280, rating:4.7, color:"#FF7A5C", initials:"DR"},
+    {name:"Kate Abrenica", subj:"Filipino", mode:"Onsite", fmt:"Individual", rate:300, rating:5.0, color:"#FFCB4C", initials:"KA"},
+    {name:"Josh Tan", subj:"Coding", mode:"Online", fmt:"Individual", rate:600, rating:4.9, color:"#3EC6C0", initials:"JT"},
+    {name:"Bea Lorenzo", subj:"Reading", mode:"Onsite", fmt:"Group", rate:250, rating:4.8, color:"#8B7FE8", initials:"BL"},
+    {name:"Rico Fernandez", subj:"Exam Prep", mode:"Online", fmt:"Individual", rate:700, rating:4.9, color:"#FF7A5C", initials:"RF"},
+    {name:"Sam Ocampo", subj:"Art", mode:"Onsite", fmt:"Group", rate:320, rating:4.6, color:"#FFCB4C", initials:"SO"},
+  ];
+
+  const budgetRange = document.getElementById('budgetRange');
+  const budgetOut = document.getElementById('budgetOut');
+  budgetRange.addEventListener('input', () => budgetOut.textContent = '₱' + budgetRange.value + '/hr');
+
+  function runMatch(){
+    const subj = document.getElementById('subjSelect').value;
+    const mode = document.getElementById('modeSelect').value;
+    const fmt = document.getElementById('formatSelect').value;
+    const budget = parseInt(budgetRange.value);
+
+    const matches = TUTORS.filter(t =>
+      (subj === 'any' || t.subj === subj) &&
+      (mode === 'any' || t.mode === mode) &&
+      (fmt === 'any' || t.fmt === fmt) &&
+      t.rate <= budget
+    );
+
+    const results = document.getElementById('matchResults');
+    if(matches.length === 0){
+      results.innerHTML = `<div class="match-results-empty"><div class="big-emoji">🙁</div><p>No exact matches yet — try widening your budget or modality.</p></div>`;
+      return;
+    }
+    results.innerHTML = matches.map(t => `
+      <div class="tutor-card tilt">
+        <div class="avatar" style="background:${t.color};">${t.initials}</div>
+        <div class="tutor-info">
+          <h4>${t.name}</h4>
+          <div class="tutor-meta">
+            <span class="tag">${t.subj}</span>
+            <span class="tag">${t.mode}</span>
+            <span class="tag">${t.fmt}</span>
+            <span class="tag">₱${t.rate}/hr</span>
+          </div>
+          <div class="rating">★ ${t.rating}</div>
+        </div>
+        <button class="book-btn" onclick="openModal('${t.name}')">Book</button>
+      </div>
+    `).join('');
+
+    results.querySelectorAll('.tilt').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `rotateY(${x*8}deg) rotateX(${-y*8}deg)`;
+      });
+      card.addEventListener('mouseleave', () => { card.style.transform = 'rotateY(0) rotateX(0)'; });
+    });
+  }
+
+  // ---- Flip / attendance demo ----
+  let sideIn = false, sideOut = false;
+  function confirmSide(side){
+    if(side === 'in'){ sideIn = true; document.getElementById('btnTimeIn').classList.add('done'); document.getElementById('btnTimeIn').textContent = '✓ Tutor confirmed'; }
+    else { sideOut = true; document.getElementById('btnTimeOut').classList.add('done'); document.getElementById('btnTimeOut').textContent = '✓ Tutee confirmed'; }
+    if(sideIn && sideOut){
+      setTimeout(() => document.getElementById('flipCard').classList.add('flipped'), 350);
+    }
+  }
+  function resetFlip(){
+    sideIn = false; sideOut = false;
+    document.getElementById('flipCard').classList.remove('flipped');
+    const a = document.getElementById('btnTimeIn'); a.classList.remove('done'); a.textContent = 'Tutor: Time in';
+    const b = document.getElementById('btnTimeOut'); b.classList.remove('done'); b.textContent = 'Tutee: Time in';
+  }
+
+  // ---- Parental toggle ----
+  function toggleParent(){
+    const sw = document.getElementById('parentSwitch');
+    const badge = document.getElementById('lockedBadge');
+    sw.classList.toggle('on');
+    badge.classList.toggle('show', sw.classList.contains('on'));
+  }
+
+  // ---- FAQ ----
+  function toggleFaq(el){
+    const item = el.parentElement;
+    const answer = item.querySelector('.faq-a');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => { i.classList.remove('open'); i.querySelector('.faq-a').style.maxHeight = null; });
+    if(!isOpen){ item.classList.add('open'); answer.style.maxHeight = answer.scrollHeight + 'px'; }
+  }
+
+  // ---- Testimonials ----
+  let testiIndex = 0;
+  const testiSlides = document.querySelectorAll('.testi-slide');
+  const testiDots = document.querySelectorAll('.testi-dots button');
+  function showTesti(i){
+    testiSlides.forEach(s => s.classList.remove('active'));
+    testiDots.forEach(d => d.classList.remove('active'));
+    testiSlides[i].classList.add('active');
+    testiDots[i].classList.add('active');
+    testiIndex = i;
+  }
+  setInterval(() => showTesti((testiIndex + 1) % testiSlides.length), 6000);
+
+  // ---- Booking modal ----
+  function openModal(name){
+    document.getElementById('modalTutorName').textContent = 'Book a session with ' + name;
+    document.getElementById('bookModal').classList.add('show');
+    document.getElementById('modalStep1').classList.add('active');
+    document.getElementById('modalStep2').classList.remove('active');
+    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+    document.getElementById('modalNextBtn').disabled = true;
+  }
+  function closeModal(){ document.getElementById('bookModal').classList.remove('show'); }
+  function selectSlot(el){
+    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('modalNextBtn').disabled = false;
+  }
+  function goStep2(){
+    document.getElementById('modalStep1').classList.remove('active');
+    document.getElementById('modalStep2').classList.add('active');
+  }
+  document.getElementById('bookModal').addEventListener('click', e => { if(e.target.id === 'bookModal') closeModal(); });
+</script>
+
+</body>
+</html>
