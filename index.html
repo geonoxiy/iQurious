@@ -381,10 +381,215 @@
     *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
   }
   :focus-visible{outline:3px solid var(--purple); outline-offset:2px;}
+  /* ==================================================================
+     APP SHELL — role select, signup forms, dashboards
+     ================================================================== */
+  .view{display:none;}
+  .view.active{display:block;}
+  .app-topbar{
+    position:sticky;top:0;z-index:50;background:rgba(251,252,247,0.92);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;
+  }
+  .app-topbar .logo{font-size:1.15rem;}
+  .app-topbar .logo-dot{width:28px;height:28px;}
+  .exit-link{font-weight:800;font-size:0.85rem;color:var(--ink-soft);display:flex;align-items:center;gap:6px;}
+  .exit-link:hover{color:var(--coral);}
+
+  /* ---- Role select ---- */
+  .rs-wrap{max-width:900px;margin:0 auto;padding:70px 28px 100px;text-align:center;}
+  .rs-wrap h1{font-size:2.2rem;margin-bottom:12px;}
+  .rs-wrap > p{max-width:480px;margin:0 auto 44px;font-size:1.05rem;}
+  .rs-cards{display:grid;grid-template-columns:1fr 1fr;gap:24px;text-align:left;}
+  .rs-card{
+    background:var(--card);border:2px solid var(--line);border-radius:24px;padding:34px;cursor:pointer;
+    transition:all .22s ease;box-shadow:var(--shadow);
+  }
+  .rs-card:hover{border-color:var(--teal);transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+  .rs-card .rs-emoji{
+    width:62px;height:62px;border-radius:18px;display:flex;align-items:center;justify-content:center;
+    font-size:1.8rem;margin-bottom:20px;
+  }
+  .rs-card.for-student .rs-emoji{background:#E4F7F6;}
+  .rs-card.for-tutor .rs-emoji{background:#FDEDE8;}
+  .rs-card h3{font-size:1.25rem;color:var(--ink);margin-bottom:8px;}
+  .rs-card p{font-size:0.92rem;}
+  .rs-card .rs-go{margin-top:20px;font-weight:800;font-size:0.88rem;color:var(--teal-dark);display:flex;align-items:center;gap:6px;}
+  .rs-mode-toggle{display:inline-flex;background:var(--bg-soft);border:1px solid var(--line);border-radius:100px;padding:5px;margin-bottom:8px;}
+  .rs-mode-toggle button{padding:9px 20px;border-radius:100px;font-weight:800;font-size:0.85rem;color:var(--ink-soft);}
+  .rs-mode-toggle button.active{background:var(--ink);color:#fff;}
+
+  /* ---- Signup forms (shared) ---- */
+  .form-shell{max-width:620px;margin:0 auto;padding:56px 28px 100px;}
+  .form-progress{display:flex;align-items:center;gap:8px;margin-bottom:36px;}
+  .form-progress .fp-step{flex:1;height:6px;border-radius:100px;background:var(--line);position:relative;overflow:hidden;}
+  .form-progress .fp-step.done, .form-progress .fp-step.current{background:var(--teal);}
+  .form-progress-label{font-weight:800;font-size:0.8rem;color:var(--ink-soft);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.6px;}
+  .form-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:36px;box-shadow:var(--shadow);}
+  .form-card h2{font-size:1.5rem;margin-bottom:6px;}
+  .form-card > p.sub{margin-bottom:26px;}
+  .f-group{margin-bottom:20px;}
+  .f-group label{display:block;font-weight:800;font-size:0.85rem;color:var(--ink);margin-bottom:8px;}
+  .f-group .hint{font-weight:600;font-size:0.78rem;color:var(--ink-soft);margin-top:6px;}
+  .f-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  input[type=text], input[type=email], input[type=password], input[type=number], input[type=tel], textarea, .form-shell select{
+    width:100%;padding:13px 14px;border-radius:12px;border:2px solid var(--line);
+    font-family:'Nunito';font-weight:700;color:var(--ink);background:var(--bg-soft);font-size:0.95rem;
+  }
+  input:focus, textarea:focus, select:focus{outline:none;border-color:var(--teal);}
+  textarea{resize:vertical;min-height:80px;font-weight:600;}
+  .chip-select{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{
+    padding:9px 16px;border-radius:100px;border:2px solid var(--line);font-weight:800;font-size:0.85rem;
+    color:var(--ink-soft);background:var(--bg-soft);transition:all .18s;
+  }
+  .chip.selected{background:var(--teal);border-color:var(--teal);color:#fff;}
+  .chip.selected.tutor-accent{background:var(--coral);border-color:var(--coral);}
+  .seg-toggle{display:flex;gap:8px;}
+  .seg-toggle button{flex:1;padding:12px;border-radius:12px;border:2px solid var(--line);font-weight:800;font-size:0.88rem;color:var(--ink-soft);background:var(--bg-soft);}
+  .seg-toggle button.active{background:var(--ink);border-color:var(--ink);color:#fff;}
+  .upload-box{
+    border:2px dashed var(--line);border-radius:14px;padding:22px;text-align:center;background:var(--bg-soft);
+    font-weight:700;font-size:0.88rem;color:var(--ink-soft);cursor:pointer;transition:border-color .2s;
+  }
+  .upload-box:hover{border-color:var(--teal);}
+  .upload-box.filled{border-color:var(--teal);color:var(--teal-dark);border-style:solid;background:#E4F7F6;}
+  .form-nav{display:flex;justify-content:space-between;margin-top:30px;gap:12px;}
+  .form-nav .btn-ghost, .form-nav .btn-primary{padding:13px 26px;}
+  .review-box{background:var(--bg-soft);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+  .review-row{display:flex;justify-content:space-between;font-size:0.88rem;gap:12px;}
+  .review-row span:first-child{font-weight:800;color:var(--ink-soft);}
+  .review-row span:last-child{font-weight:700;color:var(--ink);text-align:right;}
+
+  /* ---- Toast ---- */
+  .toast-stack{position:fixed;bottom:24px;right:24px;z-index:400;display:flex;flex-direction:column;gap:10px;}
+  .toast{
+    background:var(--ink);color:#fff;padding:14px 20px;border-radius:14px;font-weight:700;font-size:0.88rem;
+    box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:10px;
+    animation:toastIn .3s ease, toastOut .3s ease 2.7s forwards;
+  }
+  @keyframes toastIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes toastOut{to{opacity:0;transform:translateY(-6px);}}
+
+  /* ==================================================================
+     DASHBOARDS
+     ================================================================== */
+  .dash{display:grid;grid-template-columns:250px 1fr;min-height:100vh;}
+  .dash-sidebar{padding:26px 18px;display:flex;flex-direction:column;gap:4px;}
+  .dash-side-logo{display:flex;align-items:center;gap:10px;font-family:'Baloo 2';font-weight:800;font-size:1.1rem;padding:0 10px 22px;}
+  .dash-side-logo img{width:28px;height:28px;border-radius:8px;}
+  .dash-nav-item{
+    display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;font-weight:700;font-size:0.92rem;
+    transition:background .18s;
+  }
+  .dash-nav-item .ic{width:20px;text-align:center;}
+  .dash-nav-item.logout{margin-top:auto;}
+  .dash-main{padding:32px 36px 60px;}
+  .dash-topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:14px;}
+  .dash-topbar h1{font-size:1.6rem;}
+  .dash-avatar{width:42px;height:42px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-weight:800;}
+  .dash-panel{display:none;}
+  .dash-panel.active{display:block;animation:fadeIn .35s ease;}
+  .dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+  .dstat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow);}
+  .dstat .dnum{font-family:'Baloo 2';font-weight:800;font-size:1.7rem;color:var(--ink);}
+  .dstat .dlbl{font-size:0.8rem;font-weight:700;color:var(--ink-soft);margin-top:4px;}
+  .dash-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:var(--shadow);margin-bottom:22px;}
+  .dash-card h3{font-size:1.1rem;margin-bottom:16px;}
+  .dash-two-col{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;}
+
+  /* -- Student dashboard theme (light/teal) -- */
+  #view-dashboard-student .dash-sidebar{background:#fff;border-right:1px solid var(--line);}
+  #view-dashboard-student .dash-nav-item{color:var(--ink-soft);}
+  #view-dashboard-student .dash-nav-item:hover{background:var(--bg-soft);}
+  #view-dashboard-student .dash-nav-item.active{background:var(--teal);color:#fff;}
+  #view-dashboard-student .dash-main{background:var(--bg-soft);}
+
+  /* -- Tutor dashboard theme (navy/professional) -- */
+  #view-dashboard-tutor .dash-sidebar{background:var(--ink);}
+  #view-dashboard-tutor .dash-side-logo{color:#fff;}
+  #view-dashboard-tutor .dash-nav-item{color:#B7C2D6;}
+  #view-dashboard-tutor .dash-nav-item:hover{background:rgba(255,255,255,0.06);}
+  #view-dashboard-tutor .dash-nav-item.active{background:var(--coral);color:#fff;}
+  #view-dashboard-tutor .dash-main{background:#F5F6FA;}
+  #view-dashboard-tutor .dash-avatar{background:var(--coral);}
+
+  .verify-banner{
+    background:linear-gradient(135deg, var(--yellow), #FFE1A0);border-radius:18px;padding:20px 24px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px;flex-wrap:wrap;
+  }
+  .verify-banner strong{color:var(--ink);}
+  .verify-btn{background:var(--ink);color:#fff;padding:11px 20px;border-radius:100px;font-weight:800;font-size:0.85rem;white-space:nowrap;}
+
+  .req-item{
+    display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);
+  }
+  .req-item:last-child{border-bottom:none;}
+  .req-info{flex:1;}
+  .req-info h4{font-size:0.98rem;color:var(--ink);}
+  .req-actions{display:flex;gap:8px;}
+  .btn-accept{background:var(--teal);color:#fff;padding:9px 16px;border-radius:100px;font-weight:800;font-size:0.8rem;}
+  .btn-decline{background:transparent;border:2px solid var(--line);color:var(--ink-soft);padding:9px 16px;border-radius:100px;font-weight:800;font-size:0.8rem;}
+  .empty-note{text-align:center;padding:30px;color:var(--ink-soft);font-weight:600;font-size:0.9rem;}
+
+  .roster-table{width:100%;border-collapse:collapse;}
+  .roster-table th{text-align:left;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--ink-soft);padding:0 0 10px;border-bottom:1px solid var(--line);}
+  .roster-table td{padding:14px 0;border-bottom:1px solid var(--line);font-weight:700;font-size:0.9rem;color:var(--ink);}
+  .roster-table tr:last-child td{border-bottom:none;}
+
+  .avail-grid{display:grid;grid-template-columns:90px repeat(7,1fr);gap:6px;text-align:center;}
+  .avail-grid .ah, .avail-grid .al{font-weight:800;font-size:0.78rem;color:var(--ink-soft);padding:8px 4px;}
+  .avail-cell{
+    padding:14px 4px;border-radius:10px;background:var(--bg-soft);border:2px solid transparent;font-size:0.78rem;font-weight:700;
+    color:var(--ink-soft);cursor:pointer;transition:all .15s;
+  }
+  .avail-cell.on{background:var(--teal);color:#fff;}
+
+  .prog-bar-row{margin-bottom:16px;}
+  .prog-bar-row .pb-label{display:flex;justify-content:space-between;font-size:0.85rem;font-weight:800;color:var(--ink);margin-bottom:6px;}
+  .prog-bar-track{height:10px;border-radius:100px;background:var(--line);overflow:hidden;}
+  .prog-bar-fill{height:100%;border-radius:100px;background:var(--teal);}
+  .reflection-note{background:var(--bg-soft);border-radius:14px;padding:14px 16px;margin-bottom:10px;font-size:0.88rem;}
+  .reflection-note .rn-q{font-weight:800;color:var(--teal-dark);font-size:0.78rem;margin-bottom:4px;}
+
+  .msg-shell{display:grid;grid-template-columns:220px 1fr;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--card);height:420px;}
+  .msg-list{border-right:1px solid var(--line);overflow-y:auto;}
+  .msg-list-item{padding:14px 16px;border-bottom:1px solid var(--line);cursor:pointer;font-weight:700;font-size:0.85rem;}
+  .msg-list-item.active{background:var(--bg-soft);}
+  .msg-list-item .mp{font-size:0.76rem;color:var(--ink-soft);font-weight:600;margin-top:2px;}
+  .msg-thread{padding:18px;display:flex;flex-direction:column;gap:10px;overflow-y:auto;}
+  .bubble{max-width:75%;padding:11px 15px;border-radius:16px;font-size:0.85rem;font-weight:600;}
+  .bubble.them{background:var(--bg-soft);align-self:flex-start;}
+  .bubble.me{background:var(--teal);color:#fff;align-self:flex-end;}
+
+  .switch-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);}
+  .switch-row:last-child{border-bottom:none;}
+
+  .earn-table{width:100%;border-collapse:collapse;margin-top:6px;}
+  .earn-table th{text-align:left;font-size:0.75rem;text-transform:uppercase;color:var(--ink-soft);padding-bottom:8px;border-bottom:1px solid var(--line);}
+  .earn-table td{padding:11px 0;border-bottom:1px solid var(--line);font-size:0.86rem;font-weight:700;}
+  .earn-table td.amt{color:var(--teal-dark);}
+  .earn-table td.fee{color:var(--coral);}
+
+  .profile-tags{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+  .profile-tags .tag{background:var(--bg-soft);}
+
+  @media(max-width:900px){
+    .rs-cards{grid-template-columns:1fr;}
+    .f-row{grid-template-columns:1fr;}
+    .dash{grid-template-columns:1fr;}
+    .dash-sidebar{display:flex;flex-direction:row;overflow-x:auto;padding:14px 12px;}
+    .dash-side-logo{display:none;}
+    .dash-nav-item.logout{margin-top:0;}
+    .dash-grid{grid-template-columns:1fr 1fr;}
+    .dash-two-col{grid-template-columns:1fr;}
+    .msg-shell{grid-template-columns:1fr;height:auto;}
+    .avail-grid{grid-template-columns:60px repeat(7,1fr);font-size:0.7rem;}
+  }
 </style>
 </head>
 <body>
 
+<div class="view active" id="view-landing">
 <nav class="nav">
   <div class="nav-inner">
     <div class="logo"><img class="logo-dot" src="data:image/png;base64,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" alt="iQurious logo"> iQurious</div>
@@ -396,7 +601,8 @@
       <a href="#faq">FAQ</a>
     </div>
     <div style="display:flex;align-items:center;gap:14px;">
-      <a href="#match" class="nav-cta">Get started</a>
+      <a href="javascript:void(0)" onclick="openRoleSelect('login')" style="font-weight:700;font-size:0.92rem;color:var(--ink-soft);" class="login-link">Log in</a>
+      <a href="javascript:void(0)" onclick="openRoleSelect('signup')" class="nav-cta">Sign up</a>
       <button class="burger" id="burgerBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -406,6 +612,7 @@
     <a href="#safety">Safety</a>
     <a href="#pricing">Pricing</a>
     <a href="#faq">FAQ</a>
+    <a href="javascript:void(0)" onclick="openRoleSelect('signup')" style="color:var(--coral);">Sign up</a>
   </div>
 </nav>
 
@@ -423,7 +630,7 @@
       </div>
 
       <div class="hero-actions">
-        <a href="#match" class="btn-primary" id="heroPrimaryBtn">Find my tutor →</a>
+        <a href="javascript:void(0)" class="btn-primary" id="heroPrimaryBtn" onclick="startSignup(heroRoleIntent)">Find my tutor →</a>
         <a href="#how" class="btn-ghost">See how it works</a>
       </div>
       <p class="hero-note">🔒 ID-verified tutors &nbsp; • &nbsp; 👨‍👩‍👧 Parent-controlled accounts for minors</p>
@@ -700,6 +907,449 @@
     </div>
   </div>
 </footer>
+</div><!-- /view-landing -->
+
+<!-- ============== ROLE SELECT (sign up / log in) ============== -->
+<div class="view" id="view-role-select">
+  <div class="app-topbar">
+    <div class="logo"><img class="logo-dot" src="data:image/png;base64,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" alt="iQurious logo"> iQurious</div>
+    <a href="javascript:void(0)" class="exit-link" onclick="goLanding()">← Back to homepage</a>
+  </div>
+  <div class="rs-wrap">
+    <div class="rs-mode-toggle" role="group" aria-label="Sign up or log in">
+      <button class="active" id="rsSignupBtn" onclick="setRsMode('signup')">Sign up</button>
+      <button id="rsLoginBtn" onclick="setRsMode('login')">Log in</button>
+    </div>
+    <h1 id="rsHeading">Who's joining iQurious?</h1>
+    <p id="rsSub">Pick the option that fits — we'll ask a few quick questions to set things up right.</p>
+    <div class="rs-cards">
+      <div class="rs-card for-student" onclick="startSignup('student')">
+        <div class="rs-emoji">🎓</div>
+        <h3>Student or parent</h3>
+        <p>Get matched with a verified tutor based on subject, budget, and how your child learns best.</p>
+        <div class="rs-go">Continue →</div>
+      </div>
+      <div class="rs-card for-tutor" onclick="startSignup('tutor')">
+        <div class="rs-emoji">✏️</div>
+        <h3>Tutor</h3>
+        <p>Get verified once, then let students who fit your teaching style find and book you.</p>
+        <div class="rs-go">Continue →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== STUDENT / PARENT SIGNUP ============== -->
+<div class="view" id="view-signup-student">
+  <div class="app-topbar">
+    <div class="logo"><img class="logo-dot" src="data:image/png;base64,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" alt="iQurious logo"> iQurious</div>
+    <a href="javascript:void(0)" class="exit-link" onclick="goLanding()">✕ Cancel</a>
+  </div>
+  <div class="form-shell">
+    <div class="form-progress-label" id="sStepLabel">Step 1 of 3 — Account basics</div>
+    <div class="form-progress">
+      <div class="fp-step current" data-step="1"></div>
+      <div class="fp-step" data-step="2"></div>
+      <div class="fp-step" data-step="3"></div>
+    </div>
+
+    <div class="form-card">
+      <!-- Step 1 -->
+      <div class="s-step active" data-step="1">
+        <h2>Let's create your account</h2>
+        <p class="sub">This is who we'll contact about bookings and payments.</p>
+        <div class="f-group">
+          <label>Who are you signing up as?</label>
+          <div class="seg-toggle">
+            <button class="active" id="sMyselfBtn" onclick="setStudentWho('myself')">Myself (student)</button>
+            <button id="sChildBtn" onclick="setStudentWho('child')">My child</button>
+          </div>
+        </div>
+        <div class="f-group">
+          <label id="sNameLabel">Your full name</label>
+          <input type="text" id="sName" placeholder="e.g. Maria Santos">
+        </div>
+        <div class="f-row">
+          <div class="f-group"><label>Email</label><input type="email" id="sEmail" placeholder="you@email.com"></div>
+          <div class="f-group"><label>Phone number</label><input type="tel" id="sPhone" placeholder="09XX XXX XXXX"></div>
+        </div>
+        <div class="f-group" id="sChildFields" style="display:none;">
+          <label>Child's name and grade level</label>
+          <div class="f-row">
+            <input type="text" id="sChildName" placeholder="Child's full name">
+            <input type="text" id="sChildGrade" placeholder="e.g. Grade 5">
+          </div>
+          <p class="hint">🔒 Since this account is managed for a minor, you'll keep control of all bookings, payments, and messages.</p>
+        </div>
+        <div class="f-group"><label>Create a password</label><input type="password" id="sPassword" placeholder="At least 8 characters"></div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="s-step" data-step="2">
+        <h2>What kind of help are you looking for?</h2>
+        <p class="sub">This is exactly what our matching system uses to find a fit.</p>
+        <div class="f-group">
+          <label>Subject(s) needed</label>
+          <div class="chip-select" id="sSubjectChips">
+            <button class="chip" data-val="Math">Math</button>
+            <button class="chip" data-val="Science">Science</button>
+            <button class="chip" data-val="English">English</button>
+            <button class="chip" data-val="Filipino">Filipino</button>
+            <button class="chip" data-val="Reading">Reading &amp; Writing</button>
+            <button class="chip" data-val="Coding">Coding</button>
+            <button class="chip" data-val="Art">Art</button>
+            <button class="chip" data-val="Exam Prep">Exam Prep</button>
+          </div>
+        </div>
+        <div class="f-row">
+          <div class="f-group">
+            <label>Learning style</label>
+            <select id="sLearningStyle">
+              <option>Visual</option><option>Hands-on / practice-based</option>
+              <option>Discussion-based</option><option>Independent, self-paced</option>
+            </select>
+          </div>
+          <div class="f-group">
+            <label>Session format</label>
+            <select id="sFormat"><option>Individual</option><option>Group</option></select>
+          </div>
+        </div>
+        <div class="f-row">
+          <div class="f-group">
+            <label>Modality</label>
+            <select id="sModality"><option>Online</option><option>Onsite</option><option>Either</option></select>
+          </div>
+          <div class="f-group">
+            <label>Budget — <span id="sBudgetOut">₱600/hr max</span></label>
+            <input type="range" id="sBudget" min="200" max="900" step="50" value="600">
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="s-step" data-step="3">
+        <h2>When works best?</h2>
+        <p class="sub">Review everything, then create your account.</p>
+        <div class="f-group">
+          <label>Preferred days</label>
+          <div class="chip-select" id="sDayChips">
+            <button class="chip" data-val="Mon">Mon</button><button class="chip" data-val="Tue">Tue</button>
+            <button class="chip" data-val="Wed">Wed</button><button class="chip" data-val="Thu">Thu</button>
+            <button class="chip" data-val="Fri">Fri</button><button class="chip" data-val="Sat">Sat</button>
+            <button class="chip" data-val="Sun">Sun</button>
+          </div>
+        </div>
+        <div class="f-row">
+          <div class="f-group">
+            <label>Preferred time</label>
+            <select id="sTime"><option>Morning</option><option>Afternoon</option><option>Evening</option></select>
+          </div>
+          <div class="f-group"><label>City / area (for onsite)</label><input type="text" id="sCity" placeholder="e.g. Marikina City"></div>
+        </div>
+        <div class="review-box" id="sReviewBox"></div>
+      </div>
+
+      <div class="form-nav">
+        <button class="btn-ghost" id="sBackBtn" onclick="sChangeStep(-1)" style="visibility:hidden;">← Back</button>
+        <button class="btn-primary" id="sNextBtn" onclick="sChangeStep(1)">Continue →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== TUTOR SIGNUP ============== -->
+<div class="view" id="view-signup-tutor">
+  <div class="app-topbar">
+    <div class="logo"><img class="logo-dot" src="data:image/png;base64,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" alt="iQurious logo"> iQurious</div>
+    <a href="javascript:void(0)" class="exit-link" onclick="goLanding()">✕ Cancel</a>
+  </div>
+  <div class="form-shell">
+    <div class="form-progress-label" id="tStepLabel">Step 1 of 3 — Basic info</div>
+    <div class="form-progress">
+      <div class="fp-step current" data-step="1"></div>
+      <div class="fp-step" data-step="2"></div>
+      <div class="fp-step" data-step="3"></div>
+    </div>
+
+    <div class="form-card">
+      <!-- Step 1 -->
+      <div class="t-step active" data-step="1">
+        <h2>Tell us about you</h2>
+        <p class="sub">Students will see this once you're verified.</p>
+        <div class="f-group"><label>Full name</label><input type="text" id="tName" placeholder="e.g. Iah Santos"></div>
+        <div class="f-row">
+          <div class="f-group"><label>Email</label><input type="email" id="tEmail" placeholder="you@email.com"></div>
+          <div class="f-group"><label>Phone number</label><input type="tel" id="tPhone" placeholder="09XX XXX XXXX"></div>
+        </div>
+        <div class="f-group"><label>Create a password</label><input type="password" id="tPassword" placeholder="At least 8 characters"></div>
+        <div class="f-group"><label>Short bio</label><textarea id="tBio" placeholder="e.g. Engineering student who's tutored Grade 7-10 Math for 3 years..."></textarea></div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="t-step" data-step="2">
+        <h2>Verify your credentials</h2>
+        <p class="sub">Every tutor is screened before appearing in search — this is that step.</p>
+        <div class="f-group">
+          <label>Valid ID</label>
+          <div class="upload-box" id="tIdUpload" onclick="mockUpload('tIdUpload','Valid ID')">📎 Click to attach a valid ID (mock upload)</div>
+        </div>
+        <div class="f-group">
+          <label>Proof of educational background</label>
+          <div class="upload-box" id="tEduUpload" onclick="mockUpload('tEduUpload','Diploma / TOR')">📎 Click to attach diploma or transcript (mock upload)</div>
+        </div>
+        <div class="f-row">
+          <div class="f-group"><label>Degree / field of study</label><input type="text" id="tDegree" placeholder="e.g. BS Management Engineering"></div>
+          <div class="f-group"><label>Years of tutoring experience</label><input type="number" id="tExp" placeholder="e.g. 3" min="0"></div>
+        </div>
+        <div class="f-group">
+          <label>Subjects you teach</label>
+          <div class="chip-select" id="tSubjectChips">
+            <button class="chip" data-val="Math">Math</button>
+            <button class="chip" data-val="Science">Science</button>
+            <button class="chip" data-val="English">English</button>
+            <button class="chip" data-val="Filipino">Filipino</button>
+            <button class="chip" data-val="Reading">Reading &amp; Writing</button>
+            <button class="chip" data-val="Coding">Coding</button>
+            <button class="chip" data-val="Art">Art</button>
+            <button class="chip" data-val="Exam Prep">Exam Prep</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="t-step" data-step="3">
+        <h2>Availability and rate</h2>
+        <p class="sub">You can always adjust this later from your dashboard.</p>
+        <div class="f-row">
+          <div class="f-group">
+            <label>Modality</label>
+            <select id="tModality"><option>Online</option><option>Onsite</option><option>Both</option></select>
+          </div>
+          <div class="f-group"><label>Hourly rate (₱)</label><input type="number" id="tRate" placeholder="e.g. 400" min="0"></div>
+        </div>
+        <div class="f-group">
+          <label>Available days</label>
+          <div class="chip-select" id="tDayChips">
+            <button class="chip" data-val="Mon">Mon</button><button class="chip" data-val="Tue">Tue</button>
+            <button class="chip" data-val="Wed">Wed</button><button class="chip" data-val="Thu">Thu</button>
+            <button class="chip" data-val="Fri">Fri</button><button class="chip" data-val="Sat">Sat</button>
+            <button class="chip" data-val="Sun">Sun</button>
+          </div>
+        </div>
+        <div class="review-box" id="tReviewBox"></div>
+      </div>
+
+      <div class="form-nav">
+        <button class="btn-ghost" id="tBackBtn" onclick="tChangeStep(-1)" style="visibility:hidden;">← Back</button>
+        <button class="btn-primary" id="tNextBtn" onclick="tChangeStep(1)">Continue →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== STUDENT / PARENT DASHBOARD ============== -->
+<div class="view" id="view-dashboard-student">
+  <div class="dash">
+    <aside class="dash-sidebar">
+      <div class="dash-side-logo"><img src="data:image/png;base64,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" alt=""> iQurious</div>
+      <div class="dash-nav-item active" data-panel="home" onclick="setDashPanel('student','home')"><span class="ic">🏠</span> Home</div>
+      <div class="dash-nav-item" data-panel="tutors" onclick="setDashPanel('student','tutors')"><span class="ic">🧑‍🏫</span> My Tutors</div>
+      <div class="dash-nav-item" data-panel="bookings" onclick="setDashPanel('student','bookings')"><span class="ic">📅</span> Bookings</div>
+      <div class="dash-nav-item" data-panel="progress" onclick="setDashPanel('student','progress')"><span class="ic">📈</span> Progress</div>
+      <div class="dash-nav-item" data-panel="messages" onclick="setDashPanel('student','messages')"><span class="ic">💬</span> Messages</div>
+      <div class="dash-nav-item" data-panel="settings" onclick="setDashPanel('student','settings')"><span class="ic">⚙️</span> Settings</div>
+      <div class="dash-nav-item logout" onclick="goLanding()"><span class="ic">↩️</span> Log out</div>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-topbar">
+        <h1 id="stuGreeting">Hi there 👋</h1>
+        <div class="dash-avatar" id="stuAvatar">S</div>
+      </div>
+
+      <div class="dash-panel active" data-panel="home">
+        <div class="dash-grid">
+          <div class="dstat"><div class="dnum">3</div><div class="dlbl">Sessions completed</div></div>
+          <div class="dstat"><div class="dnum">4.5</div><div class="dlbl">Hours learned</div></div>
+          <div class="dstat"><div class="dnum">2</div><div class="dlbl">Week streak</div></div>
+          <div class="dstat"><div class="dnum" id="stuMatchCount">0</div><div class="dlbl">Matched tutors</div></div>
+        </div>
+        <div class="dash-two-col">
+          <div class="dash-card">
+            <h3>Your matched tutors</h3>
+            <div id="stuHomeMatches"></div>
+          </div>
+          <div class="dash-card">
+            <h3>Upcoming session</h3>
+            <div class="flip-demo">
+              <div class="flip-card-inner" id="stuFlipCard">
+                <div class="flip-face flip-front" style="padding:22px;">
+                  <div class="fc-emoji" style="font-size:1.8rem;">📍</div>
+                  <h4 style="font-size:1rem;">Math session — this Saturday, 10 AM</h4>
+                  <p style="color:rgba(255,255,255,0.85);font-size:0.85rem;">Confirm attendance once the session starts.</p>
+                  <div class="confirm-row">
+                    <button class="confirm-btn" id="stuBtnTutor" onclick="stuConfirmSide('tutor')">Tutor: confirm</button>
+                    <button class="confirm-btn" id="stuBtnMe" onclick="stuConfirmSide('me')">Me: confirm</button>
+                  </div>
+                </div>
+                <div class="flip-face flip-back" style="padding:22px;">
+                  <h4 style="font-size:1rem;">✅ Session confirmed</h4>
+                  <div class="check-row" style="font-size:0.85rem;"><span class="dot">✓</span> Tutor attendance verified</div>
+                  <div class="check-row" style="font-size:0.85rem;"><span class="dot">✓</span> Your attendance verified</div>
+                  <div class="check-row" style="font-size:0.85rem;"><span class="dot">✓</span> Payment released</div>
+                  <a class="reset-link" onclick="stuResetFlip()" style="font-size:0.8rem;">↺ Reset demo</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-panel" data-panel="tutors">
+        <div class="dash-card">
+          <h3>Tutors matched to your preferences</h3>
+          <div id="stuTutorsFull"></div>
+        </div>
+      </div>
+
+      <div class="dash-panel" data-panel="bookings">
+        <div class="dash-card">
+          <h3>Your sessions</h3>
+          <div id="stuBookingsList"></div>
+        </div>
+      </div>
+
+      <div class="dash-panel" data-panel="progress">
+        <div class="dash-card">
+          <h3>Sessions by subject</h3>
+          <div id="stuProgressBars"></div>
+        </div>
+        <div class="dash-card">
+          <h3>What you learned best</h3>
+          <div id="stuReflections"></div>
+        </div>
+      </div>
+
+      <div class="dash-panel" data-panel="messages">
+        <div class="dash-card">
+          <h3>Messages</h3>
+          <div class="msg-shell">
+            <div class="msg-list" id="stuMsgList"></div>
+            <div class="msg-thread" id="stuMsgThread"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-panel" data-panel="settings">
+        <div class="dash-card">
+          <h3>Account</h3>
+          <div class="switch-row"><span>Email</span><span id="stuSettingsEmail" style="font-weight:700;"></span></div>
+          <div class="switch-row"><span>Managed by verified guardian</span><span id="stuMinorFlag" style="font-weight:700;">—</span></div>
+        </div>
+        <div class="dash-card">
+          <h3>Notifications</h3>
+          <div class="switch-row"><span>Booking reminders</span><button class="switch on" onclick="this.classList.toggle('on')"><div class="knob"></div></button></div>
+          <div class="switch-row"><span>New tutor matches</span><button class="switch on" onclick="this.classList.toggle('on')"><div class="knob"></div></button></div>
+          <div class="switch-row"><span>Promotions</span><button class="switch" onclick="this.classList.toggle('on')"><div class="knob"></div></button></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ============== TUTOR DASHBOARD ============== -->
+<div class="view" id="view-dashboard-tutor">
+  <div class="dash">
+    <aside class="dash-sidebar">
+      <div class="dash-side-logo"><img src="data:image/png;base64,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" alt=""> iQurious</div>
+      <div class="dash-nav-item active" data-panel="home" onclick="setDashPanel('tutor','home')"><span class="ic">🏠</span> Home</div>
+      <div class="dash-nav-item" data-panel="requests" onclick="setDashPanel('tutor','requests')"><span class="ic">📥</span> Requests <span id="reqBadge" style="background:var(--coral);color:#fff;border-radius:100px;padding:1px 8px;font-size:0.72rem;margin-left:4px;"></span></div>
+      <div class="dash-nav-item" data-panel="students" onclick="setDashPanel('tutor','students')"><span class="ic">🧑‍🎓</span> Students</div>
+      <div class="dash-nav-item" data-panel="availability" onclick="setDashPanel('tutor','availability')"><span class="ic">🗓️</span> Availability</div>
+      <div class="dash-nav-item" data-panel="earnings" onclick="setDashPanel('tutor','earnings')"><span class="ic">💰</span> Earnings</div>
+      <div class="dash-nav-item" data-panel="profile" onclick="setDashPanel('tutor','profile')"><span class="ic">👤</span> Profile</div>
+      <div class="dash-nav-item logout" onclick="goLanding()"><span class="ic">↩️</span> Log out</div>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-topbar">
+        <h1 id="tutGreeting">Welcome back 👋</h1>
+        <div class="dash-avatar" id="tutAvatar">T</div>
+      </div>
+
+      <div class="dash-panel active" data-panel="home">
+        <div class="verify-banner" id="verifyBanner">
+          <div><strong>🕓 Verification pending.</strong> Your ID and credentials are being reviewed — this usually takes 24–48 hours.</div>
+          <button class="verify-btn" onclick="simulateApproval()">Simulate approval</button>
+        </div>
+        <div class="dash-grid">
+          <div class="dstat"><div class="dnum">—</div><div class="dlbl">Average rating</div></div>
+          <div class="dstat"><div class="dnum">0</div><div class="dlbl">Sessions this month</div></div>
+          <div class="dstat"><div class="dnum" id="tutPendingCount">0</div><div class="dlbl">Pending requests</div></div>
+          <div class="dstat"><div class="dnum" id="tutProfilePct">70%</div><div class="dlbl">Profile completeness</div></div>
+        </div>
+        <div class="dash-card">
+          <h3>Recent activity</h3>
+          <div id="tutActivity"></div>
+        </div>
+      </div>
+
+      <div class="dash-panel" data-panel="requests">
+        <div class="dash-card">
+          <h3>Booking requests</h3>
+          <div id="tutRequestsList"></div>
+        </div>
+      </div>
+
+      <div class="dash-panel" data-panel="students">
+        <div class="dash-card">
+          <h3>Your roster</h3>
+          <table class="roster-table" id="tutRosterTable">
+            <thead><tr><th>Student</th><th>Subject</th><th>Sessions</th><th>Next session</th></tr></thead>
+            <tbody id="tutRosterBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="dash-panel" data-panel="availability">
+        <div class="dash-card">
+          <h3>Weekly availability</h3>
+          <p style="margin-bottom:16px;">Click a cell to mark yourself available for that block.</p>
+          <div class="avail-grid" id="availGrid"></div>
+        </div>
+      </div>
+
+      <div class="dash-panel" data-panel="earnings">
+        <div class="dash-grid" style="grid-template-columns:repeat(3,1fr);">
+          <div class="dstat"><div class="dnum">₱0</div><div class="dlbl">This month</div></div>
+          <div class="dstat"><div class="dnum">₱0</div><div class="dlbl">Pending payout</div></div>
+          <div class="dstat"><div class="dnum">3–5%</div><div class="dlbl">Platform commission</div></div>
+        </div>
+        <div class="dash-card">
+          <h3>Recent sessions</h3>
+          <table class="earn-table" id="earnTable">
+            <thead><tr><th>Student</th><th>Subject</th><th>Amount</th><th>Commission</th></tr></thead>
+            <tbody></tbody>
+          </table>
+          <p class="empty-note">Completed sessions will appear here once you start teaching.</p>
+        </div>
+      </div>
+
+      <div class="dash-panel" data-panel="profile">
+        <div class="dash-card">
+          <h3>Your public profile</h3>
+          <p id="tutProfileBio" style="margin-bottom:14px;"></p>
+          <div class="profile-tags" id="tutProfileTags"></div>
+          <div class="review-row"><span>Degree</span><span id="tutProfileDegree"></span></div>
+          <div class="review-row"><span>Experience</span><span id="tutProfileExp"></span></div>
+          <div class="review-row"><span>Modality</span><span id="tutProfileModality"></span></div>
+          <div class="review-row"><span>Hourly rate</span><span id="tutProfileRate"></span></div>
+          <button class="btn-ghost" style="margin-top:18px;" onclick="editTutorProfile()">✎ Edit profile</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
 
 <!-- BOOKING MODAL -->
 <div class="modal-overlay" id="bookModal">
@@ -733,7 +1383,9 @@
   mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
 
   // ---- Role toggle ----
+  let heroRoleIntent = 'student';
   function setRole(role){
+    heroRoleIntent = role;
     const studentBtn = document.getElementById('roleStudentBtn');
     const tutorBtn = document.getElementById('roleTutorBtn');
     const headline = document.getElementById('heroHeadline');
@@ -927,6 +1579,395 @@
     document.getElementById('modalStep2').classList.add('active');
   }
   document.getElementById('bookModal').addEventListener('click', e => { if(e.target.id === 'bookModal') closeModal(); });
+
+  /* ================================================================
+     APP STATE + ROUTING
+     ================================================================ */
+  const appState = {
+    student: { isMinor:false, name:'', email:'', subjects:[], days:[], format:'Individual', modality:'Online', style:'Visual', budget:600, city:'' },
+    tutor: { name:'', email:'', bio:'', subjects:[], days:[], degree:'', exp:0, modality:'Online', rate:400, idUploaded:false, eduUploaded:false, verified:false },
+  };
+
+  function showToast(msg, emoji){
+    const stack = document.getElementById('toastStack');
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.innerHTML = `<span>${emoji || '✅'}</span><span>${msg}</span>`;
+    stack.appendChild(t);
+    setTimeout(() => t.remove(), 3000);
+  }
+
+  function switchView(id){
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
+  }
+  function goLanding(){ switchView('view-landing'); }
+  function openRoleSelect(mode){ setRsMode(mode || 'signup'); switchView('view-role-select'); }
+  function setRsMode(mode){
+    document.getElementById('rsSignupBtn').classList.toggle('active', mode === 'signup');
+    document.getElementById('rsLoginBtn').classList.toggle('active', mode === 'login');
+    document.getElementById('rsHeading').textContent = mode === 'signup' ? "Who's joining iQurious?" : "Welcome back — who's logging in?";
+    document.getElementById('rsSub').textContent = mode === 'signup'
+      ? "Pick the option that fits — we'll ask a few quick questions to set things up right."
+      : "This is a demo, so picking a role jumps straight into that dashboard.";
+  }
+  function startSignup(role){
+    if(role === 'tutor'){ switchView('view-signup-tutor'); tGoToStep(1); }
+    else { switchView('view-signup-student'); sGoToStep(1); }
+  }
+
+  /* ================================================================
+     STUDENT / PARENT SIGNUP
+     ================================================================ */
+  let sStep = 1;
+  function setStudentWho(who){
+    appState.student.isMinor = (who === 'child');
+    document.getElementById('sMyselfBtn').classList.toggle('active', who === 'myself');
+    document.getElementById('sChildBtn').classList.toggle('active', who === 'child');
+    document.getElementById('sChildFields').style.display = who === 'child' ? 'block' : 'none';
+    document.getElementById('sNameLabel').textContent = who === 'child' ? "Parent / guardian's full name" : "Your full name";
+  }
+  document.getElementById('sSubjectChips')?.addEventListener('click', e => {
+    if(e.target.classList.contains('chip')){ e.target.classList.toggle('selected'); }
+  });
+  document.getElementById('sDayChips')?.addEventListener('click', e => {
+    if(e.target.classList.contains('chip')){ e.target.classList.toggle('selected'); }
+  });
+  document.getElementById('sBudget')?.addEventListener('input', e => {
+    document.getElementById('sBudgetOut').textContent = '₱' + e.target.value + '/hr max';
+  });
+
+  function sGoToStep(step){
+    sStep = step;
+    document.querySelectorAll('.s-step').forEach(el => el.classList.toggle('active', +el.dataset.step === step));
+    document.querySelectorAll('#view-signup-student .fp-step').forEach(el => {
+      const s = +el.dataset.step;
+      el.classList.remove('done','current');
+      if(s < step) el.classList.add('done'); else if(s === step) el.classList.add('current');
+    });
+    const labels = ['Account basics','Learning needs','Schedule & confirm'];
+    document.getElementById('sStepLabel').textContent = `Step ${step} of 3 — ${labels[step-1]}`;
+    document.getElementById('sBackBtn').style.visibility = step === 1 ? 'hidden' : 'visible';
+    document.getElementById('sNextBtn').textContent = step === 3 ? 'Create my account' : 'Continue →';
+    if(step === 3) sBuildReview();
+  }
+  function sChangeStep(dir){
+    if(dir > 0 && sStep === 3){ return submitStudentSignup(); }
+    if(dir > 0){
+      if(sStep === 1 && (!document.getElementById('sName').value.trim() || !document.getElementById('sEmail').value.trim())){
+        showToast('Please fill in your name and email first.', '⚠️'); return;
+      }
+    }
+    const next = sStep + dir;
+    if(next < 1 || next > 3) return;
+    sGoToStep(next);
+  }
+  function sBuildReview(){
+    const subs = [...document.querySelectorAll('#sSubjectChips .chip.selected')].map(c => c.dataset.val);
+    const days = [...document.querySelectorAll('#sDayChips .chip.selected')].map(c => c.dataset.val);
+    const box = document.getElementById('sReviewBox');
+    box.innerHTML = `
+      <div class="review-row"><span>Name</span><span>${document.getElementById('sName').value || '—'}</span></div>
+      <div class="review-row"><span>Subjects</span><span>${subs.join(', ') || '—'}</span></div>
+      <div class="review-row"><span>Modality</span><span>${document.getElementById('sModality').value}</span></div>
+      <div class="review-row"><span>Format</span><span>${document.getElementById('sFormat').value}</span></div>
+      <div class="review-row"><span>Budget</span><span>${document.getElementById('sBudgetOut').textContent}</span></div>
+      <div class="review-row"><span>Days</span><span>${days.join(', ') || '—'}</span></div>
+    `;
+  }
+  function submitStudentSignup(){
+    const st = appState.student;
+    st.name = document.getElementById('sName').value.trim() || 'Student';
+    st.email = document.getElementById('sEmail').value.trim();
+    st.subjects = [...document.querySelectorAll('#sSubjectChips .chip.selected')].map(c => c.dataset.val);
+    st.days = [...document.querySelectorAll('#sDayChips .chip.selected')].map(c => c.dataset.val);
+    st.format = document.getElementById('sFormat').value;
+    st.modality = document.getElementById('sModality').value;
+    st.style = document.getElementById('sLearningStyle').value;
+    st.budget = +document.getElementById('sBudget').value;
+    st.city = document.getElementById('sCity').value.trim();
+    if(st.isMinor){
+      st.childName = document.getElementById('sChildName').value.trim();
+      st.childGrade = document.getElementById('sChildGrade').value.trim();
+    }
+    buildStudentDashboard();
+    switchView('view-dashboard-student');
+    showToast(`Welcome, ${st.name}! Your account is ready.`, '🎉');
+  }
+
+  /* ================================================================
+     TUTOR SIGNUP
+     ================================================================ */
+  let tStep = 1;
+  document.getElementById('tSubjectChips')?.addEventListener('click', e => {
+    if(e.target.classList.contains('chip')){ e.target.classList.toggle('selected'); e.target.classList.toggle('tutor-accent'); }
+  });
+  document.getElementById('tDayChips')?.addEventListener('click', e => {
+    if(e.target.classList.contains('chip')){ e.target.classList.toggle('selected'); e.target.classList.toggle('tutor-accent'); }
+  });
+  function mockUpload(boxId, label){
+    const box = document.getElementById(boxId);
+    box.classList.add('filled');
+    box.textContent = '✅ ' + label + ' attached';
+    if(boxId === 'tIdUpload') appState.tutor.idUploaded = true;
+    if(boxId === 'tEduUpload') appState.tutor.eduUploaded = true;
+  }
+  function tGoToStep(step){
+    tStep = step;
+    document.querySelectorAll('.t-step').forEach(el => el.classList.toggle('active', +el.dataset.step === step));
+    document.querySelectorAll('#view-signup-tutor .fp-step').forEach(el => {
+      const s = +el.dataset.step;
+      el.classList.remove('done','current');
+      if(s < step) el.classList.add('done'); else if(s === step) el.classList.add('current');
+    });
+    const labels = ['Basic info','Verify your credentials','Availability and rate'];
+    document.getElementById('tStepLabel').textContent = `Step ${step} of 3 — ${labels[step-1]}`;
+    document.getElementById('tBackBtn').style.visibility = step === 1 ? 'hidden' : 'visible';
+    document.getElementById('tNextBtn').textContent = step === 3 ? 'Submit application' : 'Continue →';
+    if(step === 3) tBuildReview();
+  }
+  function tChangeStep(dir){
+    if(dir > 0 && tStep === 3){ return submitTutorSignup(); }
+    if(dir > 0){
+      if(tStep === 1 && (!document.getElementById('tName').value.trim() || !document.getElementById('tEmail').value.trim())){
+        showToast('Please fill in your name and email first.', '⚠️'); return;
+      }
+    }
+    const next = tStep + dir;
+    if(next < 1 || next > 3) return;
+    tGoToStep(next);
+  }
+  function tBuildReview(){
+    const subs = [...document.querySelectorAll('#tSubjectChips .chip.selected')].map(c => c.dataset.val);
+    const days = [...document.querySelectorAll('#tDayChips .chip.selected')].map(c => c.dataset.val);
+    const box = document.getElementById('tReviewBox');
+    box.innerHTML = `
+      <div class="review-row"><span>Name</span><span>${document.getElementById('tName').value || '—'}</span></div>
+      <div class="review-row"><span>Subjects</span><span>${subs.join(', ') || '—'}</span></div>
+      <div class="review-row"><span>Degree</span><span>${document.getElementById('tDegree').value || '—'}</span></div>
+      <div class="review-row"><span>Rate</span><span>₱${document.getElementById('tRate').value || '0'}/hr</span></div>
+      <div class="review-row"><span>Modality</span><span>${document.getElementById('tModality').value}</span></div>
+      <div class="review-row"><span>Available days</span><span>${days.join(', ') || '—'}</span></div>
+    `;
+  }
+  function submitTutorSignup(){
+    const tt = appState.tutor;
+    tt.name = document.getElementById('tName').value.trim() || 'Tutor';
+    tt.email = document.getElementById('tEmail').value.trim();
+    tt.bio = document.getElementById('tBio').value.trim() || 'New tutor on iQurious.';
+    tt.degree = document.getElementById('tDegree').value.trim();
+    tt.exp = document.getElementById('tExp').value || '0';
+    tt.subjects = [...document.querySelectorAll('#tSubjectChips .chip.selected')].map(c => c.dataset.val);
+    tt.days = [...document.querySelectorAll('#tDayChips .chip.selected')].map(c => c.dataset.val);
+    tt.modality = document.getElementById('tModality').value;
+    tt.rate = document.getElementById('tRate').value || '400';
+    tt.verified = false;
+    buildTutorDashboard();
+    switchView('view-dashboard-tutor');
+    showToast(`Application submitted, ${tt.name}! We'll verify your credentials shortly.`, '📩');
+  }
+  function editTutorProfile(){
+    const tt = appState.tutor;
+    switchView('view-signup-tutor');
+    document.getElementById('tName').value = tt.name;
+    document.getElementById('tEmail').value = tt.email;
+    document.getElementById('tBio').value = tt.bio;
+    document.getElementById('tDegree').value = tt.degree;
+    document.getElementById('tExp').value = tt.exp;
+    document.getElementById('tModality').value = tt.modality;
+    document.getElementById('tRate').value = tt.rate;
+    document.querySelectorAll('#tSubjectChips .chip').forEach(c => c.classList.toggle('selected', tt.subjects.includes(c.dataset.val)));
+    document.querySelectorAll('#tSubjectChips .chip.selected').forEach(c => c.classList.add('tutor-accent'));
+    document.querySelectorAll('#tDayChips .chip').forEach(c => c.classList.toggle('selected', tt.days.includes(c.dataset.val)));
+    document.querySelectorAll('#tDayChips .chip.selected').forEach(c => c.classList.add('tutor-accent'));
+    tGoToStep(1);
+  }
+
+  /* ================================================================
+     STUDENT DASHBOARD BUILD + PANELS
+     ================================================================ */
+  const bookingsSeed = [
+    {tutor:'Iah Santos', subj:'Math', date:'This Saturday, 10:00 AM', status:'Confirmed'},
+    {tutor:'Dani Reyes', subj:'English', date:'Last Tuesday, 6:30 PM', status:'Completed', rating:5},
+  ];
+  const reflectionsSeed = [
+    {q:"What did you learn best in this session?", a:"How to factor quadratic equations by grouping — Iah broke it into 3 easy steps."},
+    {q:"What did you learn best in this session?", a:"Topic sentences and how to build a paragraph around one — Dani used my own essay as the example."},
+  ];
+  const msgThreads = [
+    {name:'Iah Santos', preview:'See you Saturday!', messages:[{from:'them', text:'Hi! Just confirming our session this Saturday at 10 AM 😊'},{from:'me', text:'Yes, see you then!'},{from:'them', text:'See you Saturday!'}]},
+    {name:'Dani Reyes', preview:'Great job on the essay!', messages:[{from:'them', text:'Great job on the essay revisions this week!'},{from:'me', text:'Thank you, that really helped.'}]},
+  ];
+
+  function buildStudentDashboard(){
+    const st = appState.student;
+    document.getElementById('stuGreeting').textContent = `Hi, ${st.name.split(' ')[0]} 👋`;
+    document.getElementById('stuAvatar').textContent = st.name.charAt(0).toUpperCase();
+    document.getElementById('stuSettingsEmail').textContent = st.email || '—';
+    document.getElementById('stuMinorFlag').textContent = st.isMinor ? '🔒 Yes — parent-managed' : 'No';
+
+    const matches = TUTORS.filter(t =>
+      (st.subjects.length === 0 || st.subjects.includes(t.subj)) &&
+      (st.modality === 'Either' || t.mode === st.modality) &&
+      t.rate <= st.budget
+    );
+    const pool = matches.length ? matches : TUTORS.slice(0,3);
+    document.getElementById('stuMatchCount').textContent = pool.length;
+
+    const cardHtml = t => `
+      <div class="tutor-card tilt" style="margin-bottom:10px;">
+        <div class="avatar" style="background:${t.color};">${t.initials}</div>
+        <div class="tutor-info">
+          <h4>${t.name}</h4>
+          <div class="tutor-meta"><span class="tag">${t.subj}</span><span class="tag">${t.mode}</span><span class="tag">₱${t.rate}/hr</span></div>
+          <div class="rating">★ ${t.rating}</div>
+        </div>
+        <button class="book-btn" onclick="openModal('${t.name}')">Book</button>
+      </div>`;
+    document.getElementById('stuHomeMatches').innerHTML = pool.slice(0,3).map(cardHtml).join('') || '<div class="empty-note">No matches yet — adjust your preferences.</div>';
+    document.getElementById('stuTutorsFull').innerHTML = pool.map(cardHtml).join('');
+
+    document.getElementById('stuBookingsList').innerHTML = bookingsSeed.map(b => `
+      <div class="req-item">
+        <div class="req-info"><h4>${b.subj} with ${b.tutor}</h4><p style="font-size:0.85rem;">${b.date}${b.rating ? ' · you rated it ★'+b.rating : ''}</p></div>
+        <span class="tag" style="background:${b.status==='Confirmed' ? '#E4F7F6':'var(--bg-soft)'};color:${b.status==='Confirmed'?'var(--teal-dark)':'var(--ink-soft)'};">${b.status}</span>
+      </div>`).join('');
+
+    const bySubj = {};
+    bookingsSeed.forEach(b => bySubj[b.subj] = (bySubj[b.subj]||0) + 1);
+    (st.subjects.length ? st.subjects : Object.keys(bySubj)).forEach(s => { if(!(s in bySubj)) bySubj[s] = 0; });
+    const maxV = Math.max(1, ...Object.values(bySubj));
+    document.getElementById('stuProgressBars').innerHTML = Object.entries(bySubj).map(([s,v]) => `
+      <div class="prog-bar-row">
+        <div class="pb-label"><span>${s}</span><span>${v} session${v===1?'':'s'}</span></div>
+        <div class="prog-bar-track"><div class="prog-bar-fill" style="width:${(v/maxV*100)||4}%;"></div></div>
+      </div>`).join('') || '<div class="empty-note">Complete a session to see progress here.</div>';
+    document.getElementById('stuReflections').innerHTML = reflectionsSeed.map(r => `
+      <div class="reflection-note"><div class="rn-q">${r.q}</div><div>“${r.a}”</div></div>`).join('');
+
+    document.getElementById('stuMsgList').innerHTML = msgThreads.map((t,i) => `
+      <div class="msg-list-item ${i===0?'active':''}" onclick="openStuThread(${i})"><div>${t.name}</div><div class="mp">${t.preview}</div></div>`).join('');
+    openStuThread(0);
+  }
+  function openStuThread(i){
+    document.querySelectorAll('#stuMsgList .msg-list-item').forEach((el,idx) => el.classList.toggle('active', idx===i));
+    document.getElementById('stuMsgThread').innerHTML = msgThreads[i].messages.map(m =>
+      `<div class="bubble ${m.from==='me'?'me':'them'}">${m.text}</div>`).join('');
+  }
+  function setDashPanel(role, panel){
+    const prefix = role === 'student' ? '#view-dashboard-student' : '#view-dashboard-tutor';
+    document.querySelectorAll(`${prefix} .dash-nav-item`).forEach(el => el.classList.toggle('active', el.dataset.panel === panel));
+    document.querySelectorAll(`${prefix} .dash-panel`).forEach(el => el.classList.toggle('active', el.dataset.panel === panel));
+  }
+  let stuSideIn = false, stuSideOut = false;
+  function stuConfirmSide(side){
+    if(side === 'tutor'){ stuSideIn = true; const b = document.getElementById('stuBtnTutor'); b.classList.add('done'); b.textContent = '✓ Tutor confirmed'; }
+    else { stuSideOut = true; const b = document.getElementById('stuBtnMe'); b.classList.add('done'); b.textContent = '✓ You confirmed'; }
+    if(stuSideIn && stuSideOut) setTimeout(() => document.getElementById('stuFlipCard').classList.add('flipped'), 350);
+  }
+  function stuResetFlip(){
+    stuSideIn = false; stuSideOut = false;
+    document.getElementById('stuFlipCard').classList.remove('flipped');
+    const a = document.getElementById('stuBtnTutor'); a.classList.remove('done'); a.textContent = 'Tutor: confirm';
+    const b = document.getElementById('stuBtnMe'); b.classList.remove('done'); b.textContent = 'Me: confirm';
+  }
+
+  /* ================================================================
+     TUTOR DASHBOARD BUILD + PANELS
+     ================================================================ */
+  let tutRequests = [
+    {name:'Carlo Dizon', subj:'Math', time:'Fri · 4:00 PM'},
+    {name:'Grace Lim (parent of Ana)', subj:'Math', time:'Sat · 10:00 AM'},
+    {name:'Reign Cruz', subj:'Math', time:'Mon · 2:00 PM'},
+  ];
+  let tutRoster = [];
+  const activitySeed = [
+    'Your application was received and is in the verification queue.',
+    'Complete your profile bio to improve your match rate.',
+  ];
+
+  function buildTutorDashboard(){
+    const tt = appState.tutor;
+    document.getElementById('tutGreeting').textContent = `Welcome, ${tt.name.split(' ')[0]} 👋`;
+    document.getElementById('tutAvatar').textContent = tt.name.charAt(0).toUpperCase();
+    document.getElementById('verifyBanner').style.display = tt.verified ? 'none' : 'flex';
+    renderTutRequests();
+    renderTutRoster();
+    renderAvailGrid();
+    document.getElementById('tutActivity').innerHTML = activitySeed.map(a => `<div class="req-item"><div class="req-info"><p>${a}</p></div></div>`).join('');
+
+    document.getElementById('tutProfileBio').textContent = tt.bio;
+    document.getElementById('tutProfileTags').innerHTML = tt.subjects.map(s => `<span class="tag">${s}</span>`).join('') || '<span class="tag">No subjects added yet</span>';
+    document.getElementById('tutProfileDegree').textContent = tt.degree || '—';
+    document.getElementById('tutProfileExp').textContent = (tt.exp || '0') + ' years';
+    document.getElementById('tutProfileModality').textContent = tt.modality;
+    document.getElementById('tutProfileRate').textContent = '₱' + tt.rate + '/hr';
+
+    const pct = 55 + (tt.bio.length>10?10:0) + (tt.subjects.length?15:0) + (tt.degree?10:0) + (tt.idUploaded?5:0) + (tt.eduUploaded?5:0);
+    document.getElementById('tutProfilePct').textContent = Math.min(pct,100) + '%';
+  }
+  function renderTutRequests(){
+    document.getElementById('tutPendingCount').textContent = tutRequests.length;
+    document.getElementById('reqBadge').textContent = tutRequests.length || '';
+    document.getElementById('reqBadge').style.display = tutRequests.length ? 'inline' : 'none';
+    const list = document.getElementById('tutRequestsList');
+    if(!tutRequests.length){ list.innerHTML = '<div class="empty-note">No pending requests right now.</div>'; return; }
+    list.innerHTML = tutRequests.map((r,i) => `
+      <div class="req-item">
+        <div class="req-info"><h4>${r.name}</h4><p style="font-size:0.85rem;">${r.subj} · ${r.time}</p></div>
+        <div class="req-actions">
+          <button class="btn-accept" onclick="respondRequest(${i}, true)">Accept</button>
+          <button class="btn-decline" onclick="respondRequest(${i}, false)">Decline</button>
+        </div>
+      </div>`).join('');
+  }
+  function respondRequest(i, accept){
+    const r = tutRequests[i];
+    tutRequests.splice(i,1);
+    if(accept){
+      tutRoster.push({name:r.name, subj:r.subj, sessions:0, next:r.time});
+      showToast(`Accepted ${r.name}'s booking request.`, '✅');
+    } else {
+      showToast(`Declined ${r.name}'s request.`, '👋');
+    }
+    renderTutRequests();
+    renderTutRoster();
+  }
+  function renderTutRoster(){
+    const body = document.getElementById('tutRosterBody');
+    if(!tutRoster.length){ body.innerHTML = `<tr><td colspan="4" class="empty-note">Accept a booking request to see students here.</td></tr>`; return; }
+    body.innerHTML = tutRoster.map(s => `<tr><td>${s.name}</td><td>${s.subj}</td><td>${s.sessions}</td><td>${s.next}</td></tr>`).join('');
+  }
+  const availState = {};
+  function renderAvailGrid(){
+    const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    const blocks = ['Morning','Afternoon','Evening'];
+    const grid = document.getElementById('availGrid');
+    let html = `<div></div>` + days.map(d => `<div class="ah">${d}</div>`).join('');
+    blocks.forEach(b => {
+      html += `<div class="al">${b}</div>`;
+      days.forEach(d => {
+        const key = d+b;
+        const on = appState.tutor.days.includes(d);
+        availState[key] = availState[key] ?? on;
+        html += `<div class="avail-cell ${availState[key] ? 'on':''}" onclick="toggleAvail('${key}', this)">${availState[key] ? '✓' : ''}</div>`;
+      });
+    });
+    grid.innerHTML = html;
+  }
+  function toggleAvail(key, el){
+    availState[key] = !availState[key];
+    el.classList.toggle('on', availState[key]);
+    el.textContent = availState[key] ? '✓' : '';
+  }
+  function simulateApproval(){
+    appState.tutor.verified = true;
+    document.getElementById('verifyBanner').style.display = 'none';
+    activitySeed.unshift('🎉 You\'re verified! Your profile is now visible to students searching for ' + (appState.tutor.subjects[0] || 'your subjects') + '.');
+    document.getElementById('tutActivity').innerHTML = activitySeed.map(a => `<div class="req-item"><div class="req-info"><p>${a}</p></div></div>`).join('');
+    showToast('Verification complete — your profile is now live!', '🎉');
+  }
 </script>
 
 </body>
